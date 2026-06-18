@@ -30,7 +30,6 @@ By separating the infrastructure (the framework) from the execution logic (your 
 
 ## 🏗️ Project Architecture
 
-```text
 SwarmHub/
 ├── swarmhub/
 │   ├── core/
@@ -44,17 +43,15 @@ SwarmHub/
 ├── tools/                # Centralized, reusable backend endpoints and utilities
 └── tests/                # Automated validation test suite
 
-## 📄 License
 
-Distributed under the Apache License 2.0. See the `LICENSE` file for details.
+## 🚀 Quick Start Guide
 
-
-🚀 Quick Start Guide
 1. Installation
 Mount SwarmHub globally to your laptop terminal shell in editable development mode:
-
 Bash
 pip install -e .
+
+
 2. Programmatically Generate a Swarm Blueprint
 Create a script (e.g., run_sdk_triage.py) to build a guardrailed, tool-aware agent workstream using the agnostic fluent API:
 
