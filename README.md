@@ -23,13 +23,14 @@ By separating the infrastructure (the framework) from the execution logic (your 
 * **Fluent Programmatic SDK:** Design non-linear multi-agent networks using clean, chainable, human-readable Python commands.
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source assets and rebuild them into alternative runtime targets.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime corruption.
-* **Lossless Round-Trip Metadata Relays:** Embeds serialized topological maps inside comments to cleanly pass graph data across linear and non-linear framework frameworks.
+* **Lossless Round-Trip Metadata Relays:** Embeds serialized topological maps inside comments to cleanly pass graph data across diverse agent frameworks.
 * **Local Sandboxed Verification Engine:** Run and test full business logic pipelines offline for free without spending real LLM API tokens during dev iterations.
 
 ---
 
 ## 🏗️ Project Architecture
 
+```text
 SwarmHub/
 ├── swarmhub/
 │   ├── core/
@@ -42,20 +43,25 @@ SwarmHub/
 ├── blobs/                # Business logic & local prompts (Agent Executables)
 ├── tools/                # Centralized, reusable backend endpoints and utilities
 └── tests/                # Automated validation test suite
+```
 
+---
 
 ## 🚀 Quick Start Guide
 
-1. Installation
+### 1. Installation
+
 Mount SwarmHub globally to your laptop terminal shell in editable development mode:
-Bash
+
+```bash
 pip install -e .
+```
 
+### 2. Programmatically Generate a Swarm Blueprint
 
-2. Programmatically Generate a Swarm Blueprint
-Create a script (e.g., run_sdk_triage.py) to build a guardrailed, tool-aware agent workstream using the agnostic fluent API:
+Create a script (e.g., `run_sdk_triage.py`) to build a guardrailed, tool-aware agent workstream using the agnostic fluent API:
 
-Python
+```python
 from swarmhub.core.builder import SwarmWorkflow
 from swarmhub.emitters.langgraph import LangGraphEmitter
 
@@ -82,36 +88,47 @@ agent_system = (
 # Compile down into a clean, standalone production code file
 blueprint = agent_system.build_spec()
 LangGraphEmitter(blueprint).write_to_disk("dist/production_langgraph.py")
+```
+
 Run the script to build your baseline deployment file:
 
-Bash
+```bash
 python3 run_sdk_triage.py
-3. Cross-Compile Frameworks on the Fly via CLI
+```
+
+### 3. Cross-Compile Frameworks on the Fly via CLI
+
 Now that the baseline file is written, you can pass it straight to your global terminal command tool to generate alternative architecture outputs without modifying a single line of your source logic:
 
-Bash
+```bash
 # Cross-compile the generated LangGraph file straight down into native CrewAI code
 swarmhub --source dist/production_langgraph.py --from-framework langgraph --target crewai --output dist/crew_workforce.py
 
 # Transpile that same logic layout directly into a Microsoft AutoGen Chatroom environment
 swarmhub --source dist/production_langgraph.py --target autogen --output dist/autogen_chatroom.py
-🔒 Automated Contract Guardrails
-SwarmHub protects long-running state tracking parameters by appending an isolated SharedContextContract(BaseModel) model into the execution wrapper loops of every target framework. When nodes run:
+```
 
-On Entry: Catches initialization glitches or structural errors introduced by external API payload handoffs before they penetrate the node's brain.
+---
 
-On Exit: Catches logical errors or data key typos made inside custom code blobs before they propagate downstream and break the workflow.
+## 🔒 Automated Contract Guardrails
 
-🧪 Running the Compiler Test Suite
+SwarmHub protects long-running state tracking parameters by appending an isolated `SharedContextContract(BaseModel)` model into the execution wrapper loops of every target framework. When nodes run:
+
+* **On Entry:** Catches initialization glitches or structural errors introduced by external API payload handoffs before they penetrate the node's brain.
+* **On Exit:** Catches logical errors or data key typos made inside custom code blobs before they propagate downstream and break the workflow.
+
+---
+
+## 🧪 Running the Compiler Test Suite
+
 To ensure absolute system stability, verify the codebase locally against the full cross-compilation test rig:
 
-Bash
+```bash
 pytest -v
+```
 
+---
 
 ## 📄 License
 
 Distributed under the Apache License 2.0. See the `LICENSE` file for details.
-
-
-
