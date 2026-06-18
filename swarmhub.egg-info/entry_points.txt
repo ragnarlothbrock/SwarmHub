@@ -1,0 +1,2 @@
+[console_scripts]
+swarmhub = swarmhub.cli:run_cli

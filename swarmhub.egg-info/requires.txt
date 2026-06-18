@@ -1,0 +1,4 @@
+pydantic>=2.0.0
+langgraph>=0.1.0
+crewai>=0.1.0
+autogen>=0.2.0

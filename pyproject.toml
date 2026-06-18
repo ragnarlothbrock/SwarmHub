@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swarmhub"
+version = "0.1.0"
+description = "The Universal Abstraction Plane and Cross-Compiler for AI Agent Frameworks"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0.0",
+    "langgraph>=0.1.0",
+    "crewai>=0.1.0",
+    "autogen>=0.2.0",
+]
+
+[project.scripts]
+swarmhub = "swarmhub.cli:run_cli"
+
+[tool.setuptools]
+packages = ["swarmhub"]

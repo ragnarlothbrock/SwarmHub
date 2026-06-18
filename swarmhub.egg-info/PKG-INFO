@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: swarmhub
+Version: 0.1.0
+Summary: The Universal Abstraction Plane and Cross-Compiler for AI Agent Frameworks
+Requires-Python: >=3.10
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: langgraph>=0.1.0
+Requires-Dist: crewai>=0.1.0
+Requires-Dist: autogen>=0.2.0

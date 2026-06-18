@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+swarmhub/__main__.py
+swarmhub/cli.py
+swarmhub.egg-info/PKG-INFO
+swarmhub.egg-info/SOURCES.txt
+swarmhub.egg-info/dependency_links.txt
+swarmhub.egg-info/entry_points.txt
+swarmhub.egg-info/requires.txt
+swarmhub.egg-info/top_level.txt
+tests/test_compiler_ring.py
