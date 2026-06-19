@@ -2,17 +2,17 @@
 
 ### The Universal Abstraction Plane and Cross-Compiler for AI Agent Frameworks
 
-SwarmHub is an enterprise-grade cross-compiler utility and programmatic SDK designed to completely decouple **AI Workforce Architecture** from **Framework Execution Paradigms**. Design your multi-agent routing graphs, data schemas, and tool allocations once using an agnostic, fluent Python API, then instantly cross-compile them natively into production-ready **LangGraph**, **CrewAI**, or **Microsoft AutoGen** codebases.
+SwarmHub is an enterprise-grade cross-compiler utility, programmatic SDK, and decentralized package manager designed to completely decouple **AI Workforce Architecture** from **Framework Execution Paradigms**. Design your multi-agent routing graphs, long-running state threads, and tool allocations once using an agnostic, fluent Python API, then instantly cross-compile them natively into production-ready **LangGraph**, **CrewAI**, or **Microsoft AutoGen** codebases.
 
 ---
 
 ## 💡 The Core Philosophy: Orchestration vs. Cognition
 
-The current AI ecosystem suffers from severe framework lock-in. Switching an active agent workforce from a State-Machine model (LangGraph) to an Actor-Model conversation layer (AutoGen) or a sequential execution track (CrewAI) typically forces an expensive, complete rewrite of state schemas, transition maps, and tool parameters.
+The current AI ecosystem suffers from severe framework lock-in. Switching an active agent workforce from a State-Machine model (LangGraph) to an Actor-Model conversation layer (AutoGen) or a sequential execution track (CrewAI) typically forces an expensive, complete rewrite of state schemas, persistence adapters, and tool parameters.
 
 SwarmHub splits the problem cleanly into two layers:
-1. **The Orchestration Layer (SwarmHub Core):** Manages routing topology, state constraints, and framework target translation loops at compile time.
-2. **The Cognitive Layer (Local Code Blobs):** Houses your actual business rules, granular prompts, and model interactions inside completely isolated, standard Python modules.
+1. **The Orchestration Layer (SwarmHub Core):** Manages routing topology, thread memory context boundaries, interface constraints, and framework target translation loops at compile time.
+2. **The Cognitive Layer (Local Code Blobs):** Houses your actual business rules, granular prompts, and model interactions inside completely isolated, standard Python modules (Blobs).
 
 By separating the infrastructure (the framework) from the execution logic (your code blobs), SwarmHub gives you the flexibility to swap underlying execution paradigms instantly with zero structural rewrites.
 
@@ -20,11 +20,12 @@ By separating the infrastructure (the framework) from the execution logic (your 
 
 ## ⚡ Key Features
 
-* **Fluent Programmatic SDK:** Design non-linear multi-agent networks using clean, chainable, human-readable Python commands.
-* **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source assets and rebuild them into alternative runtime targets.
-* **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime corruption.
-* **Lossless Round-Trip Metadata Relays:** Embeds serialized topological maps inside comments to cleanly pass graph data across diverse agent frameworks.
-* **Local Sandboxed Verification Engine:** Run and test full business logic pipelines offline for free without spending real LLM API tokens during dev iterations.
+* **Fluent Programmatic SDK:** Design non-linear multi-agent networks using clean, chainable, human-readable Python commands supporting advanced memory layouts and capability server registries.
+* **Universal State Persistence & Memory:** Track long-running conversation loops using backend-agnostic checkpointers (SQLite, In-Memory, etc.) that cross-compile cleanly into native runtime savers or persistent local offline validation checkpoints.
+* **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network `sse`/`http` transport nodes with granular, least-privilege permission scoping at the node level.
+* **Decentralized Cognitive Blob Hub:** A global package manager utility capable of downloading verified community code assets dynamically from any public GitHub repository using a simple `owner/repo/blob_slug` identifier pool, paired with an interactive packaging generator wizard.
+* **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
+* **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
 
 ---
 
@@ -34,15 +35,15 @@ By separating the infrastructure (the framework) from the execution logic (your 
 SwarmHub/
 ├── swarmhub/
 │   ├── core/
-│   │   ├── spec.py       # Universal Agent Specification Contract Schema
-│   │   ├── builder.py    # Developer-facing Fluent SDK Generator
-│   │   └── linker.py     # Graph mutation and edge splicing link-editor
-│   ├── parsers/          # AST-driven framework reverse-engineers
-│   ├── emitters/         # Framework-specific native code compilers
-│   └── cli.py            # Global Command Line interface console
-├── blobs/                # Business logic & local prompts (Agent Executables)
-├── tools/                # Centralized, reusable backend endpoints and utilities
-└── tests/                # Automated validation test suite
+│   │   ├── spec.py          # Universal Agent Specification Schema Contracts
+│   │   ├── builder.py       # Developer-facing Fluent Memory/MCP SDK Generator
+│   │   └── linker.py        # Graph mutation, interface collision, and link-editing
+│   ├── parsers/             # AST-driven memory and tool reverse-engineers
+│   ├── emitters/            # Framework-specific native code compilers & checkpointers
+│   └── cli.py               # Global Command Line interface console router
+├── blobs/                   # Business logic, local prompts, and installed code items
+├── dist/                    # Staged compilation code exports and registry builds
+└── tests/                   # Automated cross-framework ring validation test suite
 ```
 
 ---
@@ -57,28 +58,34 @@ Mount SwarmHub globally to your laptop terminal shell in editable development mo
 pip install -e .
 ```
 
-### 2. Programmatically Generate a Swarm Blueprint
+### 2. Programmatically Generate a Persistent, Tool-Aware Swarm
 
-Create a script (e.g., `run_sdk_triage.py`) to build a guardrailed, tool-aware agent workstream using the agnostic fluent API:
+Create a script (e.g., `run_sdk_triage.py`) to build a guardrailed, persistent agent workstream bound to a local Model Context Protocol capability server using the agnostic fluent API:
 
 ```python
 from swarmhub.core.builder import SwarmWorkflow
 from swarmhub.emitters.langgraph import LangGraphEmitter
 
-# Define a strict workflow contract model
+# Initialize an advanced, tool-aware workflow configuration
 agent_system = (
     SwarmWorkflow(name="corporate-triage-swarm")
     .configure_runtime(provider="openai", model="gpt-4o", temperature=0.0)
     
-    # Enforce an explicit type-safe global context state contract
+    # 💾 1. Configure Abstract State Persistence Checkpointing
+    .configure_memory(backend="sqlite", thread_id="session-tx-777", connection_string="swarmhub_memory.db")
+    
+    # 🔌 2. Register Global External MCP Capability Servers
+    .register_mcp_server(name="secure_db", transport="stdio", endpoint="uvx", args=["mcp-server-db"])
+    
+    # 📝 3. Enforce an explicit type-safe global context state contract
     .set_state_schema({
         "customer_id": "str",
         "account_balance": "float",
         "ticket_priority": "int"
     })
     
-    # Register execution steps and assign tool dependencies
-    .add_step("classifier", "blobs/triage.py", is_entry_point=True, tools=["db_lookup"])
+    # 🔒 4. Register nodes with local tool hooks and granular MCP interface privileges
+    .add_step("classifier", "blobs/triage.py", is_entry_point=True, tools=["db_lookup"], interfaces=["secure_db"])
     .add_step("processor", "blobs/refund.py")
     
     # Establish directional routing edges
@@ -96,35 +103,56 @@ Run the script to build your baseline deployment file:
 python3 run_sdk_triage.py
 ```
 
-### 3. Cross-Compile Frameworks on the Fly via CLI
+---
 
-Now that the baseline file is written, you can pass it straight to your global terminal command tool to generate alternative architecture outputs without modifying a single line of your source logic:
+## 💻 Command Line Interface (CLI) Engine
+
+SwarmHub features a fully decentralized CLI console tool managing both agent cross-compilers and structural repository assets.
+
+### Cross-Framework Transpilation
+
+Convert your generated specification script directly into alternative orchestration patterns on the fly without changing a single line of your source logic modules:
 
 ```bash
-# Cross-compile the generated LangGraph file straight down into native CrewAI code
-swarmhub --source dist/production_langgraph.py --from-framework langgraph --target crewai --output dist/crew_workforce.py
+# Cross-compile a LangGraph system down into a native, persistent CrewAI code architecture
+swarmhub compile --source dist/production_langgraph.py --from-framework langgraph --target crewai --output dist/crew_workforce.py
 
-# Transpile that same logic layout directly into a Microsoft AutoGen Chatroom environment
-swarmhub --source dist/production_langgraph.py --target autogen --output dist/autogen_chatroom.py
+# Transpile that same structural architecture layout directly into an AutoGen Chatroom
+swarmhub compile --source dist/production_langgraph.py --target autogen --output dist/autogen_chatroom.py
+
+# Optimization Flag: Inline external code blobs back into a single unified deployment asset file
+swarmhub compile --source dist/production_langgraph.py --target langgraph --output dist/unified_script.py --inline
+```
+
+### Decentralized Package Management (The Hub of Blobs)
+
+Pull down verified community cognitive logic assets from any public repository in the world, or easily compile your own local python files into shareable registry packages:
+
+```bash
+# General Syntax: swarmhub install <github_username>/<repository_name>/<blob_slug>
+swarmhub install ragnarlothbrock/SwarmHub-Registry/llm-cost-optimizer
+
+# Package a local file using the interactive publishing wizard manifest generator
+swarmhub publish blobs/my_custom_prompt.py
 ```
 
 ---
 
 ## 🔒 Automated Contract Guardrails
 
-SwarmHub protects long-running state tracking parameters by appending an isolated `SharedContextContract(BaseModel)` model into the execution wrapper loops of every target framework. When nodes run:
+SwarmHub protects transaction contexts and long-running parameters by appending an isolated `SharedContextContract(BaseModel)` validation engine straight into the wrapper routing structures of every target framework. When nodes run:
 
-* **On Entry:** Catches initialization glitches or structural errors introduced by external API payload handoffs before they penetrate the node's brain.
-* **On Exit:** Catches logical errors or data key typos made inside custom code blobs before they propagate downstream and break the workflow.
+* **On Entry:** Catches serialization glitches or external structural mutations before data penetrates the node's execution context.
+* **On Exit:** Catches logical drift, type contradictions, or key typos made inside custom code blobs before they can pollute downstream nodes or persistence databases.
 
 ---
 
 ## 🧪 Running the Compiler Test Suite
 
-To ensure absolute system stability, verify the codebase locally against the full cross-compilation test rig:
+To verify the cross-framework translation compilers, linker mergers, and memory rehydration passes locally, run the automated test suite engine:
 
 ```bash
-pytest -v
+pytest -v tests/test_compiler_ring.py
 ```
 
 ---

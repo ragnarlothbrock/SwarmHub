@@ -1,36 +1,95 @@
 import ast
+import os
 from typing import Dict, Any, List
-from swarmhub.core.spec import UniversalAgentSpec, WorkflowNode, WorkflowTopology, RuntimeConfig
+from swarmhub.core.spec import UniversalAgentSpec, WorkflowNode, WorkflowTopology, RuntimeConfig, MemoryConfig, InterfaceConfig
 
 class LangGraphASTVisitor(ast.NodeVisitor):
     """
     Deterministically crawls a Python Abstract Syntax Tree (AST) to extract
-    LangGraph topology structure (nodes, edges, initial pointers, and bound tools).
+    LangGraph topology structure, code bodies, memory checkpointer properties, and tools.
     """
-    def __init__(self):
+    def __init__(self, source_lines: List[str]):
+        self.source_lines = source_lines
         self.nodes: List[Dict[str, Any]] = []
         self.edges: List[tuple] = []
         self.initial_node: str = ""
         self.globally_bound_tools: List[str] = []
+        self.function_bodies: Dict[str, str] = {}
+        
+        # Memory Layer Extraction Pointers
+        self.memory_backend: str = "in_memory"
+        self.thread_id: str = "swarmhub-recovered-thread"
+        self.connection_string: str = "swarmhub_memory.db"
+        
+        # Global Interfaces Layer Pool
+        self.interfaces: List[InterfaceConfig] = []
+
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        """Locates and slices the raw Python string body of legacy node functions."""
+        start_line = node.lineno - 1
+        end_line = node.end_lineno
+        function_code_lines = self.source_lines[start_line:end_line]
+        
+        if function_code_lines:
+            leading_spaces = len(function_code_lines[0]) - len(function_code_lines[0].lstrip())
+            function_code_lines[0] = " " * leading_spaces + "def run(state):"
+            
+        self.function_bodies[node.name] = "\n".join(function_code_lines)
+        self.generic_visit(node)
+
+    def visit_Assign(self, node: ast.Assign):
+        """Captures variable allocations defined out-of-line."""
+        if isinstance(node.value, ast.Call):
+            call_id = ""
+            if isinstance(node.value.func, ast.Name):
+                call_id = node.value.func.id
+            elif isinstance(node.value.func, ast.Attribute):
+                call_id = node.value.func.attr
+                
+            if call_id == "connect" and node.value.args:
+                if isinstance(node.value.args[0], ast.Constant):
+                    self.connection_string = str(node.value.args[0].value)
+                    self.memory_backend = "sqlite"
+
+        if isinstance(node.value, ast.Dict):
+            for k, v in zip(node.value.keys, node.value.values):
+                if isinstance(k, ast.Constant) and k.value == "configurable" and isinstance(v, ast.Dict):
+                    for sub_k, sub_v in zip(v.keys, v.values):
+                        if isinstance(sub_k, ast.Constant) and sub_k.value == "thread_id" and isinstance(sub_v, ast.Constant):
+                            self.thread_id = str(sub_v.value)
+                            
+        self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call):
+        call_id = ""
+        if isinstance(node.func, ast.Name):
+            call_id = node.func.id
+        elif isinstance(node.func, ast.Attribute):
+            call_id = node.func.attr
+
+        if call_id == "SqliteSaver":
+            self.memory_backend = "sqlite"
+        elif call_id == "MemorySaver":
+            self.memory_backend = "in_memory"
+
         if isinstance(node.func, ast.Attribute):
             method_name = node.func.attr
             
-            # 1. Parse workflow.add_node("node_name", function)
-            if method_name == "add_node" and len(node.args) >= 1:
-                first_arg = node.args[0]
-                if isinstance(first_arg, ast.Constant):
-                    node_id = first_arg.value
+            if method_name == "add_node" and len(node.args) >= 2:
+                arg1, arg2 = node.args[0], node.args[1]
+                if isinstance(arg1, ast.Constant) and isinstance(arg2, ast.Name):
+                    node_id = arg1.value
+                    func_pointer = arg2.id
                     self.nodes.append({
                         "id": node_id,
                         "executor_type": "opaque_blob",
-                        "executor_reference": f"extracted_blobs/{node_id}.py",
+                        "executor_reference": f"blobs/{node_id}.py",
                         "transitions": [],
-                        "tools": []  # Option A: Initialized empty tools array
+                        "tools": [],
+                        "interfaces": [],
+                        "_associated_function": func_pointer
                     })
 
-            # 2. Parse workflow.add_edge(START, "node_name")
             elif method_name == "add_edge" and len(node.args) >= 2:
                 arg1, arg2 = node.args[0], node.args[1]
                 val1 = arg1.value if isinstance(arg1, ast.Constant) else getattr(arg1, 'id', str(arg1))
@@ -41,7 +100,6 @@ class LangGraphASTVisitor(ast.NodeVisitor):
                 else:
                     self.edges.append((val1, val2))
             
-            # 3. Static Tool Extraction: Detect model.bind_tools([tool_a, tool_b])
             elif method_name == "bind_tools" and len(node.args) >= 1:
                 first_arg = node.args[0]
                 if isinstance(first_arg, ast.List):
@@ -64,16 +122,25 @@ class LangGraphParser:
         self.agent_name = agent_name
 
     def parse(self) -> UniversalAgentSpec:
+        source_lines = self.source_code.split("\n")
         tree = ast.parse(self.source_code)
-        visitor = LangGraphASTVisitor()
+        
+        visitor = LangGraphASTVisitor(source_lines)
         visitor.visit(tree)
 
-        # Reconstruct standard edge transitions and bind discovered tools
         processed_nodes = []
+        os.makedirs("blobs", exist_ok=True)
+
         for node_data in visitor.nodes:
             node_id = node_data["id"]
-            transitions = []
+            func_name = node_data.pop("_associated_function", None)
             
+            if func_name and func_name in visitor.function_bodies:
+                blob_code = visitor.function_bodies[func_name]
+                with open(f"blobs/{node_id}.py", "w") as f:
+                    f.write(blob_code)
+            
+            transitions = []
             for src, dest in visitor.edges:
                 if src == node_id:
                     transitions.append({
@@ -82,8 +149,6 @@ class LangGraphParser:
                     })
             
             node_data["transitions"] = transitions
-            
-            # Fallback: distribute globally discovered tools to nodes if metadata is absent
             if visitor.globally_bound_tools:
                 node_data["tools"] = list(set(visitor.globally_bound_tools))
                 
@@ -92,11 +157,17 @@ class LangGraphParser:
         return UniversalAgentSpec(
             name=self.agent_name,
             runtime=RuntimeConfig(
-                provider="unknown_imported",
-                model="unknown_imported",
+                provider="langgraph_extracted",
+                model="extracted_model",
                 temperature=0.2
             ),
-            system_prompt="Extracted automatically via SwarmHub static AST analysis.",
+            memory=MemoryConfig(
+                storage_backend=visitor.memory_backend,
+                thread_id=visitor.thread_id,
+                connection_string=visitor.connection_string
+            ),
+            interfaces=visitor.interfaces,
+            system_prompt="Extracted automatically via SwarmHub static AST source-slicing.",
             topology=WorkflowTopology(
                 type="StateMachine",
                 initial_node=visitor.initial_node or "unknown_start",

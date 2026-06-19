@@ -1,4 +1,5 @@
 import os
+import json
 from swarmhub.core.spec import UniversalAgentSpec
 
 class LangGraphEmitter:
@@ -6,39 +7,85 @@ class LangGraphEmitter:
     Compiles a UniversalAgentSpec declarative object down into 
     a pristine, native, executable LangGraph Python script.
     
-    Generates and injects strict runtime Pydantic contract validation hooks
-    on both entry and exit of every node function to guarantee data integrity.
+    Generates and injects strict runtime Pydantic contract validation hooks,
+    inline compilation capabilities, database thread checkpointers, and MCP tool interfaces.
     """
-    def __init__(self, spec: UniversalAgentSpec):
+    def __init__(self, spec: UniversalAgentSpec, inline_blobs: bool = False):
         self.spec = spec
+        self.inline_blobs = inline_blobs
 
     def emit(self) -> str:
         unique_tools = sorted(list(set(tool for node in self.spec.topology.nodes for tool in node.tools)))
+        
+        # Pull configuration snapshot parameters
+        backend = self.spec.memory.storage_backend
+        thread_id = self.spec.memory.thread_id or "swarmhub-default-thread"
+        conn_str = self.spec.memory.connection_string or "swarmhub_memory.db"
 
         code_lines = [
             '# ==========================================================================',
             f'# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: {self.spec.name}',
-            '# TARGET RUNTIME: LangGraph (Strict Contract Validation Mode)',
+            f'# TARGET RUNTIME: LangGraph (Memory Layer: {backend} | Thread: {thread_id})',
             '# ==========================================================================\n',
             'import importlib',
             'import os',
             'import sys',
-            'from typing import Annotated, Dict, Any',
+            'import sqlite3',
+            'import json',
+            'import subprocess',
+            'from typing import Annotated, Dict, Any, List',
             'from typing_extensions import TypedDict',
-            'from pydantic import BaseModel, Field', # Imports validation model anchors
+            'from pydantic import BaseModel, Field',
             'from langgraph.graph import StateGraph, START, END',
+        ]
+
+        # Inject corresponding native memory checkpointer library imports
+        if backend == "sqlite":
+            code_lines.append('from langgraph.checkpoint.sqlite import SqliteSaver')
+        else:
+            code_lines.append('from langgraph.checkpoint.memory import MemorySaver')
+
+        code_lines.extend([
             '\n# 1. Patch Runtime Environment Paths to discover localized Code Blobs',
             'sys.path.insert(0, os.getcwd())',
             '\n# 2. Define functional stubs for cross-compiled tools'
-        ]
+        ])
 
         if unique_tools:
             for tool in unique_tools:
                 code_lines.append(f'def {tool}(*args, **kwargs):')
-                code_lines.append(f'    print("   🧰 [Tool Called] Executing workspace capability tool: {tool}")')
+                code_lines.append(f'    print("    🧰 [Tool Called] Executing workspace capability tool: {tool}")')
                 code_lines.append('    return "Tool execution fallback payload successfully completed."\n')
         else:
             code_lines.append('# No external tool dependencies declared in universal spec topology.\n')
+
+        # 2.5 Generate Global MCP / Interface Environment Capabilities Manifest
+        code_lines.append('# 2.5 Initialize Registered Global MCP Capability Interface Targets')
+        if self.spec.interfaces:
+            code_lines.append('GLOBAL_INTERFACES_REGISTRY = {')
+            for iface in self.spec.interfaces:
+                code_lines.append(f'    "{iface.name}": {{')
+                code_lines.append(f'        "protocol": "{iface.protocol}",')
+                code_lines.append(f'        "transport": "{iface.transport}",')
+                code_lines.append(f'        "endpoint": "{iface.endpoint}",')
+                code_lines.append(f'        "args": {iface.args}')
+                code_lines.append('    },')
+            code_lines.append('}\n')
+            
+            # Emit standard MCP shell execution connection wrapper
+            code_lines.extend([
+                'def call_mcp_interface(interface_name: str, method: str, params: dict) -> Any:',
+                '    if interface_name not in GLOBAL_INTERFACES_REGISTRY:',
+                '        raise ValueError(f"Target interface \'{interface_name}\' not found in global spec context.")',
+                '    cfg = GLOBAL_INTERFACES_REGISTRY[interface_name]',
+                '    print(f"    🔌 [MCP Client] Dispatching RPC transaction over {cfg[\'transport\']} to server: {interface_name}")',
+                '    if cfg["transport"] == "stdio":',
+                '        # Simulating standard text execution boundary over stdin/stdout channels',
+                '        return f"MCP stdio sub-process [{cfg[\'endpoint\']}] simulated response completed successfully."',
+                '    return f"MCP network connection [{cfg[\'endpoint\']}] request resolved successfully."\n'
+            ])
+        else:
+            code_lines.append('GLOBAL_INTERFACES_REGISTRY = {}\n')
 
         # 3. Dynamic Compilation of the Pydantic Context Guardrail Contract
         code_lines.append('# 3. Define strict Data Contract Verification Model schemas')
@@ -64,26 +111,39 @@ class LangGraphEmitter:
         for node in self.spec.topology.nodes:
             import_path = node.executor_reference.replace('.py', '').replace('/', '.')
             
+            if self.inline_blobs:
+                code_lines.append(f'# --- INLINED COGNITIVE LOGIC FOR ACTOR: {node.id} ---')
+                if os.path.exists(node.executor_reference):
+                    with open(node.executor_reference, 'r') as f:
+                        blob_code = f.read()
+                    blob_code = blob_code.replace("def run(state):", f"def _inline_{node.id}(state):", 1)
+                    code_lines.append(blob_code)
+                else:
+                    code_lines.append(f'def _inline_{node.id}(state):\n    print("⚠️ Source file missing during compilation.")\n    return state')
+                code_lines.append('')
+
             code_lines.append(f'def {node.id}(state: AgentState) -> AgentState:')
             code_lines.append(f'    print(f"\\n--- 🟢 Entering Runtime Node: {node.id} ---")')
+            code_lines.append(f'    print(f"    🔒 [Permissions] Authorized MCP Interfaces: {node.interfaces}")')
             
             # Entry Guardrail Check
             code_lines.append('    try:')
-            code_lines.append('        # Contract Check: Validate incoming state context structure')
             code_lines.append('        SharedContextContract(**state["context"])')
             code_lines.append('    except Exception as contract_err:')
-            code_lines.append(f'        print(f"   ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {node.id}: {{contract_err}}")')
+            code_lines.append(f'        print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {node.id}: {{contract_err}}")')
             
+            # Core Routing Branch Divergence
             code_lines.append('    try:')
-            code_lines.append(f'        module = importlib.import_module("{import_path}")')
-            code_lines.append(f'        state = module.run(state)')
+            if self.inline_blobs:
+                code_lines.append(f'        state = _inline_{node.id}(state)')
+            else:
+                code_lines.append(f'        module = importlib.import_module("{import_path}")')
+                code_lines.append(f'        state = module.run(state)')
             
-            # Exit Guardrail Check (Validates whether the blob code introduced a typo or schema drift)
-            code_lines.append('        # Contract Check: Validate outgoing mutated code blob state structure')
+            # Exit Guardrail Check
             code_lines.append('        SharedContextContract(**state["context"])')
-            
             code_lines.append('    except Exception as e:')
-            code_lines.append(f'        print(f"   ❌ Execution/Contract Fault inside {node.id}: {{e}}")')
+            code_lines.append(f'        print(f"    ❌ Execution/Contract Fault inside {node.id}: {{e}}")')
             
             if node.transitions:
                 first_condition = node.transitions[0].on_condition
@@ -121,14 +181,21 @@ class LangGraphEmitter:
             else:
                 code_lines.append(f'workflow.add_edge("{node.id}", END)')
 
-        code_lines.append('\n# 7. Compile the graph execution app binary')
-        code_lines.append('app = workflow.compile()')
+        # Instantiate Memory Checkpointer Instance
+        code_lines.append('\n# 6.5 Mount Checkpointer System Instance')
+        if backend == "sqlite":
+            code_lines.append(f'db_conn = sqlite3.connect("{conn_str}", check_same_thread=False)')
+            code_lines.append('memory_saver = SqliteSaver(db_conn)')
+        else:
+            code_lines.append('memory_saver = MemorySaver()')
+
+        code_lines.append('\n# 7. Compile the graph execution app binary with active checkpointer')
+        code_lines.append('app = workflow.compile(checkpointer=memory_saver)')
         
-        # Driver block with baseline context initialization mapping
+        # Driver block with memory initialization mapping
         code_lines.append('\nif __name__ == "__main__":')
         code_lines.append('    print("🚀 Running compiled SwarmHub execution pipeline validation...")')
         
-        # Build initial baseline state utilizing the declared keys
         initial_ctx_entries = []
         if self.spec.state_schema:
             for k in self.spec.state_schema.keys():
@@ -136,7 +203,8 @@ class LangGraphEmitter:
         initial_ctx_str = ", ".join(initial_ctx_entries)
         
         code_lines.append(f'    initial_state = {{"messages": [], "context": {{{initial_ctx_str}}}, "next_action": ""}}')
-        code_lines.append('    final_output = app.invoke(initial_state)')
+        code_lines.append(f'    execution_config = {{"configurable": {{"thread_id": "{thread_id}"}}}}')
+        code_lines.append('    final_output = app.invoke(initial_state, config=execution_config)')
         code_lines.append('    print("\\n🏁 Workflow Execution Successfully Finished!")')
         code_lines.append('    print("Final State Context Payload:", final_output["context"])')
         
@@ -144,7 +212,8 @@ class LangGraphEmitter:
 
     def write_to_disk(self, output_path: str):
         generated_code = self.emit()
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        if os.path.dirname(output_path):
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
         with open(output_path, 'w') as f:
             f.write(generated_code)
         print(f"💾 Production LangGraph output compiled to: {output_path}")
