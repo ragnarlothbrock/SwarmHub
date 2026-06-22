@@ -1,0 +1,14 @@
+{
+    "name": "advanced-corrective-rag",
+    "version": "0.1.0",
+    "type": "workload",
+    "description": "Advanced corrective rag engine that runs locally by using Ollama and chromadb to save embeddings",
+    "composition_blueprint": "examples/advanced_rag_swarm.py",
+    "dependencies": {
+        "blobs/advanced_rag/rag_grader.py": "blobs/advanced_rag/rag_grader.py",
+        "blobs/advanced_rag/rag_retriever.py": "blobs/advanced_rag/rag_retriever.py",
+        "blobs/advanced_rag/rag_rewriter.py": "blobs/advanced_rag/rag_rewriter.py",
+        "blobs/advanced_rag/rag_generator.py": "blobs/advanced_rag/rag_generator.py",
+        "examples/advanced_rag_swarm.py": "examples/advanced_rag_swarm.py"
+    }
+}
