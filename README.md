@@ -23,9 +23,48 @@ By separating the infrastructure (the framework) from the execution logic (your 
 * **Fluent Programmatic SDK:** Design non-linear multi-agent networks using clean, chainable, human-readable Python commands supporting advanced memory layouts and capability server registries.
 * **Universal State Persistence & Memory:** Track long-running conversation loops using backend-agnostic checkpointers (SQLite, In-Memory, etc.) that cross-compile cleanly into isolated native runtime saver tables (`swarmhub_checkpoints`) protecting your data boundaries.
 * **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network transport nodes with granular, least-privilege permission scoping at the node level.
-* **Decentralized Cognitive Blob Hub:** A global package manager utility capable of downloading verified community code assets dynamically from any public GitHub repository using a simple `owner/repo/blob_slug` identifier pool, paired with an interactive packaging generator wizard.
+* **Serverless Package Registry:** A decentralized package manager capable of staging, linting, publishing, and distributing both individual script nodes and complete multi-agent workloads directly across public GitHub repositories.
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
+
+---
+
+## 📦 The Hub of Blobs: Serverless Architecture Registry
+
+SwarmHub features a decentralized package manager that turns GitHub into a serverless distribution network. There are no centralized registry servers or hosting fees. Workflows, bricks, and agents are hosted transparently inside public git repositories, validated automatically via Abstract Syntax Tree (AST) static analysis parsing layers on download.
+
+The ecosystem handles distribution across two distinct structural levels:
+
+### 1. Atomic Bricks (Single Cognitive Steps)
+An **Atomic Brick** is an isolated, reusable single function block (e.g., an LLM prompt classifier, a text sanitizer, or a data format converter). 
+* **The Rule:** The target file must expose a valid `def run(state):` execution entry gate accepting exactly one state dictionary parameter.
+* **Publishing an Atomic Brick:** Pass the relative file path to the publishing wizard assistant:
+  ```bash
+  swarmhub publish blobs/my_generic_classifier.py
+  ```
+  The assistant verifies the code structure via AST static analysis, builds an interactive Pydantic `blob.json` data contract mapping, and stages a clean distribution folder inside `dist/registry/`.
+
+### 2. Composite Workloads (Full Agent Swarms)
+A **Composite Workload** is a turn-key multi-agent automation ecosystem (such as our Advanced Self-Correcting RAG system). It encapsulates the master workflow compilation blueprint script, the collection of underlying specialized logic blobs, and any required background terminal capability daemons.
+* **Publishing a Compound Workload:** Pass the entire workspace directory handle path directly to the assistant:
+  ```bash
+  swarmhub publish blobs/advanced_rag/
+  ```
+  The assistant flags the operation as a workload assembly, recursively crawls the directory tree to construct an automated package dependency map, links the primary execution entry file (e.g., `examples/advanced_rag_swarm.py`), and stages the complete nested package directory.
+
+### 🌐 Installing Registered Assets From the Cloud
+Because the network is fully decentralized, downloading either an individual script node or an entire pre-wired multi-agent ecosystem utilizes identical coordinate layout syntax formats:
+
+```bash
+# General Syntax: swarmhub install <github_username>/<repository_name>/<asset_slug>
+
+# Example A: Download a single community 'brick' directly into your local blobs/ folder
+swarmhub install ragnarlothbrock/SwarmHub-Registry/llm-cost-optimizer
+
+# Example B: Unpack a complete, turn-key 'workload' stack across your project directories instantly
+swarmhub install martinkovacevic/SwarmHub/advanced-corrective-rag
+```
+When a workload is detected, SwarmHub matches the dependency registry keys, downloads the files over secure raw HTTPS channels, runs safety contract checks, and mirrors the paths perfectly into your local project root (`blobs/`, `tools/`, and `examples/`), ready for cross-compilation.
 
 ---
 
@@ -37,7 +76,8 @@ SwarmHub/
 │   ├── core/
 │   │   ├── spec.py          # Universal Agent Specification Schema Contracts
 │   │   ├── builder.py       # Developer-facing Fluent Memory/MCP SDK Generator
-│   │   └── linker.py        # Graph mutation, interface collision, and link-editing
+│   │   ├── linker.py        # Graph mutation, interface collision, and link-editing
+│   │   └── registry.py      # Package registry manager, validation linters, and download clients
 │   ├── parsers/             # AST-driven memory and tool reverse-engineers
 │   ├── emitters/            # Framework-specific native code compilers & checkpointers
 │   └── cli.py               # Global Command Line interface console router
@@ -218,14 +258,17 @@ swarmhub compile --source dist/production_langgraph.py --target langgraph --outp
 
 ### Decentralized Package Management (The Hub of Blobs)
 
-Pull down verified community cognitive logic assets from any public repository in the world, or easily compile your own local python files into shareable registry packages:
+Pull down verified community cognitive logic assets or complex composite workload architectures from the public git cloud instantly:
 
 ```bash
-# General Syntax: swarmhub install <github_username>/<repository_name>/<blob_slug>
+# Install an atomic function brick asset straight into your local directory tracks
 swarmhub install ragnarlothbrock/SwarmHub-Registry/llm-cost-optimizer
 
-# Package a local file using the interactive publishing wizard manifest generator
-swarmhub publish blobs/my_custom_prompt.py
+# Install a full turn-key multi-agent workload stack (including code, tools, and configurations)
+swarmhub install martinkovacevic/SwarmHub/advanced-corrective-rag
+
+# Package a local file or directory using the automated packaging manifest assistant wizard
+swarmhub publish blobs/advanced_rag/
 ```
 
 ---
