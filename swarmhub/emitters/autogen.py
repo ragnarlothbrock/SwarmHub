@@ -8,7 +8,7 @@ class AutoGenEmitter:
     native, executable Microsoft AutoGen GroupChat Python code with thread memory persistence and MCP tools.
     
     Generates dynamic state-machine graph routers, embedded schema verification contracts,
-    and automatic user interaction entry gates.
+    automatic user interaction entry gates, and a deep unified telemetry tracking layer.
     """
     def __init__(self, spec: UniversalAgentSpec, inline_blobs: bool = False):
         self.spec = spec
@@ -43,6 +43,8 @@ class AutoGenEmitter:
             'import sys',
             'import sqlite3',
             'import json',
+            'import time',              # Added for high-fidelity latency telemetry counters
+            'import uuid',              # Added for unique transaction span ID allocations
             'import autogen',
             'from pydantic import BaseModel, Field',
         ] + metadata_comment_lines + [
@@ -180,7 +182,6 @@ class AutoGenEmitter:
             code_lines.append(f'        "{node.id}": {{"import_path": "{import_path}", "interfaces": {node.interfaces}, "inline_f": "_inline_{node.id}" if hasattr(sys.modules[__name__], "_inline_{node.id}") else None}},')
         code_lines.append('    }\n')
 
-        # ✅ FIXED: Symmetrically normalizes the table mapping keys during the emission loop pass
         code_lines.append('    ROUTING_TABLE = {')
         for node in self.spec.topology.nodes:
             code_lines.append(f'        "{node.id}": {{')
@@ -195,6 +196,7 @@ class AutoGenEmitter:
 
         code_lines.extend([
             f'\n    current_node = "{self.spec.topology.initial_node}"',
+            '    incoming_action = "INITIAL_ENTRY"',
             '    while current_node and current_node != "END":',
             '        cfg = NODES_CONFIG.get(current_node)',
             '        if not cfg:',
@@ -202,10 +204,15 @@ class AutoGenEmitter:
             '        print(f"\\n--- 🟢 Entering Conversable Actor Node: {current_node} ---")',
             '        print(f"    🔒 [Permissions] Authorized MCP Interfaces: {cfg[\'interfaces\']}")',
             '        ',
+            '        span_id = f"span-{uuid.uuid4().hex[:8]}"',
+            '        contract_status = "VERIFIED"',
+            '        start_time = time.perf_counter()',
+            '        ',
             '        try:',
             '            SharedContextContract(**state["context"])',
             '        except Exception as contract_err:',
             '            print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {current_node}: {contract_err}")',
+            '            contract_status = "FAILED_ENTRY"',
             '        ',
             '        try:',
             '            if cfg["inline_f"] and cfg["inline_f"] in globals():',
@@ -214,7 +221,12 @@ class AutoGenEmitter:
             '                module = importlib.import_module(cfg["import_path"])',
             '                state = module.run(state)',
             '            ',
-            '            SharedContextContract(**state["context"])',
+            '            if contract_status == "VERIFIED":',
+            '                try:',
+            '                    SharedContextContract(**state["context"])',
+            '                except Exception as contract_err_exit:',
+            '                    print(f"    ❌ [Contract Breakage] Outgoing contract violation caught at exit of {current_node}: {contract_err_exit}")',
+            '                    contract_status = "FAILED_EXIT"',
         ])
 
         if backend == "sqlite":
@@ -226,11 +238,27 @@ class AutoGenEmitter:
         code_lines.extend([
             '        except Exception as e:',
             '            print(f"    ❌ Execution/Contract Fault inside {current_node}: {e}")',
+            '            contract_status = "CRASHED"',
             '            break',
             '        ',
+            '        latency = round(time.perf_counter() - start_time, 4)',
             '        action = state.get("next_action", "PROCEED").upper()',
             '        if action.startswith("GOTO_"):',
             '            action = action.replace("GOTO_", "", 1)',
+            '        ',
+            '        # 📊 EMIT UNIFIED SWARMHUB TELEMETRY STRIP LOG',
+            '        telemetry_span = {',
+            '            "span_id": span_id,',
+            f'            "thread_id": "{thread_id}",',
+            '            "node_id": current_node,',
+            '            "latency_seconds": latency,',
+            '            "incoming_action": incoming_action,',
+            '            "outgoing_action": action,',
+            '            "contract_status": contract_status',
+            '        }',
+            '        print(f"📊 [Telemetry Span Generated]: {json.dumps(telemetry_span)}")',
+            '        ',
+            '        incoming_action = action',
             '        current_node = ROUTING_TABLE.get(current_node, {}).get(action, "END")',
         ])
             

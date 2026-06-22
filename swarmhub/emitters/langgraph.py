@@ -8,7 +8,8 @@ class LangGraphEmitter:
     a pristine, native, executable LangGraph Python script.
     
     Generates and injects strict runtime Pydantic contract validation hooks,
-    inline compilation capabilities, database thread checkpointers, and MCP tool interfaces.
+    inline compilation capabilities, database thread checkpointers, MCP tool interfaces,
+    and a deep unified telemetry tracking layer.
     """
     def __init__(self, spec: UniversalAgentSpec, inline_blobs: bool = False):
         self.spec = spec
@@ -33,6 +34,8 @@ class LangGraphEmitter:
             'import sqlite3',
             'import json',
             'import subprocess',
+            'import time',              # Added for high-fidelity latency telemetry counters
+            'import uuid',              # Added for unique transaction span ID allocations
             'from typing import Annotated, Dict, Any, List',
             'from typing_extensions import TypedDict',
             'from pydantic import BaseModel, Field',
@@ -107,7 +110,7 @@ class LangGraphEmitter:
             '\n# 5. Re-hydrate Execution Anchors and Bind Run Methods'
         ])
 
-        # Inject contract validation checks into the node wrappers
+        # Inject contract validation checks and telemetry span emitters into the node wrappers
         for node in self.spec.topology.nodes:
             import_path = node.executor_reference.replace('.py', '').replace('/', '.')
             
@@ -126,13 +129,26 @@ class LangGraphEmitter:
             code_lines.append(f'    print(f"\\n--- 🟢 Entering Runtime Node: {node.id} ---")')
             code_lines.append(f'    print(f"    🔒 [Permissions] Authorized MCP Interfaces: {node.interfaces}")')
             
-            # Entry Guardrail Check
-            code_lines.append('    try:')
-            code_lines.append('        SharedContextContract(**state["context"])')
-            code_lines.append('    except Exception as contract_err:')
-            code_lines.append(f'        print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {node.id}: {{contract_err}}")')
+            # Initialize telemetry span values inside the graph node execution container block
+            code_lines.extend([
+                '    span_id = f"span-{uuid.uuid4().hex[:8]}"',
+                '    contract_status = "VERIFIED"',
+                '    incoming_action = state.get("next_action", "PROCEED") or "PROCEED"',
+                '    if incoming_action.upper().startswith("GOTO_"):',
+                '        incoming_action = incoming_action.upper().replace("GOTO_", "", 1)',
+                '    start_time = time.perf_counter()',
+            ])
             
-            # Core Routing Branch Divergence
+            # Entry Guardrail Check
+            code_lines.extend([
+                '    try:',
+                '        SharedContextContract(**state["context"])',
+                '    except Exception as contract_err:',
+                f'        print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {node.id}: {{contract_err}}")',
+                '        contract_status = "FAILED_ENTRY"',
+            ])
+            
+            # Core Node Execution Logic Channel
             code_lines.append('    try:')
             if self.inline_blobs:
                 code_lines.append(f'        state = _inline_{node.id}(state)')
@@ -140,13 +156,41 @@ class LangGraphEmitter:
                 code_lines.append(f'        module = importlib.import_module("{import_path}")')
                 code_lines.append(f'        state = module.run(state)')
             
-            # Exit Guardrail Check
-            code_lines.append('        SharedContextContract(**state["context"])')
-            code_lines.append('    except Exception as e:')
-            code_lines.append(f'        print(f"    ❌ Execution/Contract Fault inside {node.id}: {{e}}")')
+            # Exit Guardrail Check (Updated to protect upstream entry status)
+            code_lines.extend([
+                '        if contract_status == "VERIFIED":',
+                '            try:',
+                '                SharedContextContract(**state.get("context", {}))',
+                '            except Exception as contract_err_exit:',
+                f'                print(f"    ❌ [Contract Breakage] Outgoing contract violation caught at exit of {node.id}: {{contract_err_exit}}")',
+                '                contract_status = "FAILED_EXIT"',
+                '    except Exception as e:',
+                f'        print(f"    ❌ Execution/Contract Fault inside {node.id}: {{e}}")',
+                '        contract_status = "CRASHED"',
+            ])
+            
+            # Calculate final delta durations metrics and emit the telemetry trace strip
+            code_lines.extend([
+                '    latency = round(time.perf_counter() - start_time, 4)',
+                '    outgoing_action = state.get("next_action", "PROCEED") or "PROCEED"',
+                '    if outgoing_action.upper().startswith("GOTO_"):',
+                '        outgoing_action = outgoing_action.upper().replace("GOTO_", "", 1)',
+                '    ',
+                '    # 📊 EMIT UNIFIED SWARMHUB TELEMETRY STRIP LOG',
+                '    telemetry_span = {',
+                '        "span_id": span_id,',
+                f'        "thread_id": "{thread_id}",',
+                f'        "node_id": "{node.id}",',
+                '        "latency_seconds": latency,',
+                '        "incoming_action": incoming_action.upper(),',
+                '        "outgoing_action": outgoing_action.upper(),',
+                '        "contract_status": contract_status',
+                '    }',
+                '    print(f"📊 [Telemetry Span Generated]: {json.dumps(telemetry_span)}")',
+            ])
             
             if not node.transitions:
-                code_lines.append('        state["next_action"] = "END"')
+                code_lines.append('    state["next_action"] = "END"')
                 
             code_lines.append('    return state\n')
 
@@ -159,7 +203,7 @@ class LangGraphEmitter:
         
         code_lines.append(f'\nworkflow.add_edge(START, "{self.spec.topology.initial_node}")')
 
-        # 🚀 Inject the native routing normalizer function to reconcile blob string semantics
+        # Inject the native routing normalizer function to reconcile blob string semantics
         code_lines.extend([
             '\n# Symmetrical routing normalizer to resolve action tokens dynamically',
             'def route_normalizer(state: AgentState) -> str:',
@@ -206,7 +250,7 @@ class LangGraphEmitter:
         code_lines.append('\nif __name__ == "__main__":')
         code_lines.append('    print("🚀 Running compiled SwarmHub execution pipeline validation...")')
         
-        # 📥 Dynamic terminal prompt compiler injection pass
+        # Dynamic terminal prompt compiler injection pass
         if self.spec.state_schema and "user_query" in self.spec.state_schema:
             code_lines.append('    user_prompt = input("\\n❓ Enter your workflow query: ")')
         

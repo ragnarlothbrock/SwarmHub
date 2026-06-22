@@ -1,6 +1,9 @@
 import os
 import shutil
 import pytest
+import subprocess
+import sys
+import json
 from pydantic import ValidationError
 
 from swarmhub.core.builder import SwarmWorkflow
@@ -12,13 +15,14 @@ from swarmhub.parsers.autogen import AutoGenParser
 from swarmhub.emitters.langgraph import LangGraphEmitter
 from swarmhub.emitters.crewai import CrewAIEmitter
 from swarmhub.emitters.autogen import AutoGenEmitter
+from swarmhub.core.registry import RegistryEngine
 
 # --- FIXTURES: SETUP & TEARDOWN RUNTIME SANDBOX ---
 @pytest.fixture(scope="module", autouse=True)
 def manage_sandbox_directories():
-    """Dynamically sets up and tears down isolated mock test modules."""
+    """Dynamically sets up and tears down isolated mock test modules in a unique space."""
     os.makedirs("blobs", exist_ok=True)
-    os.makedirs("dist", exist_ok=True)
+    os.makedirs("test_dist", exist_ok=True) # Changed from dist to test_dist
     
     # Inject a clean, standardized mock blob file for the execution pipelines to read
     mock_blob_content = (
@@ -32,9 +36,9 @@ def manage_sandbox_directories():
         
     yield # Run all collected unit tests inside this envelope
     
-    # Teardown: Clean up generated output after testing finishes
-    if os.path.exists("dist"):
-        shutil.rmtree("dist")
+    # Teardown: Clean up ONLY the test generated sandbox outputs, leaving production dist completely untouched
+    if os.path.exists("test_dist"):
+        shutil.rmtree("test_dist")
 
 
 # --- UNIT & INTEGRATION TESTS ---
@@ -57,7 +61,6 @@ def test_fluent_sdk_and_validation_guardrails():
     )
     spec = workflow.build_spec()
     
-    # Assert structural integrity definitions
     assert isinstance(spec, UniversalAgentSpec)
     assert spec.memory.storage_backend == "sqlite"
     assert spec.memory.thread_id == "thread-xyz-123"
@@ -65,7 +68,6 @@ def test_fluent_sdk_and_validation_guardrails():
     assert spec.interfaces[0].name == "secure_db"
     assert spec.topology.nodes[0].interfaces == ["secure_db"]
     
-    # Enforce initial pointer validation errors
     with pytest.raises(ValidationError):
         bad_flow = SwarmWorkflow(name="broken")
         bad_flow.initial_node = "ghost_identity"
@@ -91,17 +93,14 @@ def test_swarm_linker_interface_collision_and_permission_mutation():
     
     combined = SwarmLinker.combine(spec_a, spec_b, new_name="fused-swarm")
     
-    # Assert nodes merged and deduplicated
     node_ids = {n.id for n in combined.topology.nodes}
     assert "node_a" in node_ids
     assert "swarm_beta_node_a" in node_ids
     
-    # Assert global interfaces merged and namespaced on collision
     interface_names = {iface.name for iface in combined.interfaces}
     assert "shared_filesystem" in interface_names
     assert "swarm_beta_shared_filesystem" in interface_names
     
-    # Assert node internal lease privileges permission handles updated cleanly
     beta_node = next(n for n in combined.topology.nodes if n.id == "swarm_beta_node_a")
     assert beta_node.interfaces == ["swarm_beta_shared_filesystem"]
 
@@ -116,9 +115,9 @@ def test_cross_framework_emitters_write_pass():
     )
     spec = workflow.build_spec()
     
-    lg_path = "dist/test_lg.py"
-    cr_path = "dist/test_cr.py"
-    ag_path = "dist/test_ag.py"
+    lg_path = "test_dist/test_lg.py"
+    cr_path = "test_dist/test_cr.py"
+    ag_path = "test_dist/test_ag.py"
     
     LangGraphEmitter(spec).write_to_disk(lg_path)
     CrewAIEmitter(spec).write_to_disk(cr_path)
@@ -141,7 +140,6 @@ def test_langgraph_ast_parser_memory_and_tools_roundtrip():
     
     parsed_spec = LangGraphParser(generated_code).parse()
     
-    # Assert structural recovery of memory architectures
     assert parsed_spec.memory.storage_backend == "sqlite"
     assert parsed_spec.memory.thread_id == "checkpoint-session-777"
     assert parsed_spec.memory.connection_string == "prod_data.db"
@@ -160,7 +158,6 @@ def test_crewai_and_autogen_lossless_metadata_rehydration():
     )
     spec = workflow.build_spec()
     
-    # Test CrewAI Pass
     crew_code = CrewAIEmitter(spec).emit()
     recovered_crew_spec = CrewAIParser(crew_code).parse()
     assert recovered_crew_spec.memory.storage_backend == "sqlite"
@@ -168,9 +165,117 @@ def test_crewai_and_autogen_lossless_metadata_rehydration():
     assert len(recovered_crew_spec.interfaces) == 1
     assert recovered_crew_spec.interfaces[0].name == "cloud_vector_db"
     
-    # Test AutoGen Pass
     autogen_code = AutoGenEmitter(spec).emit()
     recovered_ag_spec = AutoGenParser(autogen_code).parse()
     assert recovered_ag_spec.memory.storage_backend == "sqlite"
     assert recovered_ag_spec.memory.thread_id == "session-omega"
     assert recovered_ag_spec.topology.nodes[0].interfaces == ["cloud_vector_db"]
+
+
+def test_cross_framework_telemetry_span_generation():
+    """6. Executes cross-compiled runtimes in automated sub-processes to assert uniform tracing telemetry spans."""
+    workflow = (
+        SwarmWorkflow(name="telemetry-validation")
+        .set_state_schema({"test_key": "str"})
+        .configure_memory(backend="in_memory", thread_id="trace-thread-999")
+        .add_step(node_id="telemetry_node", executor_reference="blobs/test_blob.py", is_entry_point=True)
+    )
+    spec = workflow.build_spec()
+
+    targets = {
+        "langgraph": (LangGraphEmitter(spec), "test_dist/telemetry_lg.py"),
+        "crewai": (CrewAIEmitter(spec), "test_dist/telemetry_cr.py"),
+        "autogen": (AutoGenEmitter(spec), "test_dist/telemetry_ag.py"),
+    }
+
+    for framework, (emitter, path) in targets.items():
+        emitter.write_to_disk(path)
+        assert os.path.exists(path)
+
+        result = subprocess.run(
+            [sys.executable, path],
+            capture_output=True,
+            text=True,
+            timeout=10
+        )
+
+        assert result.returncode == 0, f"⚠️ Cross-compiled runtime crash inside '{framework}': {result.stderr}"
+
+        telemetry_line = None
+        for line in result.stdout.splitlines():
+            if "📊 [Telemetry Span Generated]:" in line:
+                telemetry_line = line
+                break
+
+        assert telemetry_line is not None
+        json_str = telemetry_line.split("📊 [Telemetry Span Generated]:")[-1].strip()
+        span = json.loads(json_str)
+
+        assert "span_id" in span and span["span_id"].startswith("span-")
+        assert span["thread_id"] == "trace-thread-999"
+        assert span["node_id"] == "telemetry_node"
+        assert isinstance(span["latency_seconds"], float) and span["latency_seconds"] >= 0.0
+        assert span["incoming_action"] in ("INITIAL_ENTRY", "PROCEED")
+        assert span["outgoing_action"] == "PROCEED"
+        assert span["contract_status"] == "VERIFIED"
+
+
+def test_registry_ast_contract_validation_gates():
+    """7. Verifies the Registry Engine's static AST linter blocks malformed scripts and passes valid gates."""
+    valid_brick_script = (
+        "def run(state):\n"
+        "    state['context']['count'] += 1\n"
+        "    return state\n"
+    )
+    invalid_missing_run = (
+        "def process_data(payload):\n"
+        "    return payload\n"
+    )
+    invalid_wrong_params = (
+        "def run(state, context_id, extra_args):\n"
+        "    return state\n"
+    )
+    
+    assert RegistryEngine._lint_source_code(valid_brick_script, "valid_test_slug") is True
+    assert RegistryEngine._lint_source_code(invalid_missing_run, "missing_run_slug") is False
+    assert RegistryEngine._lint_source_code(invalid_wrong_params, "wrong_params_slug") is False
+
+
+def test_cross_framework_contract_failure_telemetry():
+    """8. Intentionally injects dynamic payload type anomalies into the state engine to assert failed contract telemetry spans."""
+    workflow = (
+        SwarmWorkflow(name="contract-failure-test")
+        .set_state_schema({"internal_counter": "int"})
+        .configure_memory(backend="in_memory", thread_id="error-thread-555")
+        .add_step(node_id="broken_node", executor_reference="blobs/test_blob.py", is_entry_point=True)
+    )
+    spec = workflow.build_spec()
+    
+    path = "test_dist/telemetry_failure_lg.py"
+    LangGraphEmitter(spec).write_to_disk(path)
+    assert os.path.exists(path)
+
+    with open(path, "r") as f:
+        modified_code = f.read().replace('"internal_counter": 0', '"internal_counter": "MALFORMED_STRING_DATA"')
+        
+    with open(path, "w") as f:
+        f.write(modified_code)
+
+    result = subprocess.run(
+        [sys.executable, path],
+        capture_output=True,
+        text=True,
+        timeout=10
+    )
+
+    telemetry_line = None
+    for line in result.stdout.splitlines():
+        if "📊 [Telemetry Span Generated]:" in line:
+            telemetry_line = line
+            break
+
+    assert telemetry_line is not None
+    span = json.loads(telemetry_line.split("📊 [Telemetry Span Generated]:")[-1].strip())
+
+    assert span["node_id"] == "broken_node"
+    assert span["contract_status"] == "FAILED_ENTRY"
