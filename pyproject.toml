@@ -6,12 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "swarmhub"
 version = "0.1.0"
 description = "The Universal Abstraction Plane and Cross-Compiler for AI Agent Frameworks"
+readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.0.0",
     "langgraph>=0.1.0",
+    "langgraph-checkpoint-sqlite>=2.0.0",  # Added to secure state-saving track persistence
     "crewai>=0.1.0",
     "autogen>=0.2.0",
+    "pypdf>=4.0.0",                          # Added to automate document stream extraction out-of-the-box
+    "chromadb>=0.4.20",                      # Added to handle ultra-scalable disk-persisted vector storage layers
 ]
 
 [project.scripts]

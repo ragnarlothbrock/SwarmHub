@@ -145,10 +145,7 @@ class LangGraphEmitter:
             code_lines.append('    except Exception as e:')
             code_lines.append(f'        print(f"    ❌ Execution/Contract Fault inside {node.id}: {{e}}")')
             
-            if node.transitions:
-                first_condition = node.transitions[0].on_condition
-                code_lines.append(f'        state["next_action"] = "{first_condition}"')
-            else:
+            if not node.transitions:
                 code_lines.append('        state["next_action"] = "END"')
                 
             code_lines.append('    return state\n')
@@ -162,19 +159,32 @@ class LangGraphEmitter:
         
         code_lines.append(f'\nworkflow.add_edge(START, "{self.spec.topology.initial_node}")')
 
+        # 🚀 Inject the native routing normalizer function to reconcile blob string semantics
+        code_lines.extend([
+            '\n# Symmetrical routing normalizer to resolve action tokens dynamically',
+            'def route_normalizer(state: AgentState) -> str:',
+            '    action = state.get("next_action", "END").upper()',
+            '    if not action.startswith("GOTO_") and action != "END":',
+            '        return f"GOTO_{action}"',
+            '    return action'
+        ])
+
         code_lines.append('\n# Define routing conditions rules')
         for node in self.spec.topology.nodes:
             if node.transitions:
                 path_map_entries = []
                 for transition in node.transitions:
-                    path_map_entries.append(f'        "{transition.on_condition}": "{transition.target_node}"')
+                    cond = transition.on_condition.upper()
+                    cond_fixed = cond if cond.startswith("GOTO_") else f"GOTO_{cond}"
+                    path_map_entries.append(f'        "{cond_fixed}": "{transition.target_node}"')
+                path_map_entries.append('        "GOTO_END": END')
                 path_map_entries.append('        "END": END')
                 path_map_str = ",\n".join(path_map_entries)
                 
                 code_lines.append(
                     f'workflow.add_conditional_edges(\n'
                     f'    "{node.id}",\n'
-                    f'    lambda state: state["next_action"],\n'
+                    f'    route_normalizer,\n'
                     f'    {{\n{path_map_str}\n    }}\n'
                     f')'
                 )
@@ -196,10 +206,19 @@ class LangGraphEmitter:
         code_lines.append('\nif __name__ == "__main__":')
         code_lines.append('    print("🚀 Running compiled SwarmHub execution pipeline validation...")')
         
+        # 📥 Dynamic terminal prompt compiler injection pass
+        if self.spec.state_schema and "user_query" in self.spec.state_schema:
+            code_lines.append('    user_prompt = input("\\n❓ Enter your workflow query: ")')
+        
         initial_ctx_entries = []
         if self.spec.state_schema:
             for k in self.spec.state_schema.keys():
-                initial_ctx_entries.append(f'"{k}": ""')
+                if k == "user_query":
+                    initial_ctx_entries.append('"user_query": user_prompt')
+                elif self.spec.state_schema[k] == "int":
+                    initial_ctx_entries.append(f'"{k}": 0')
+                else:
+                    initial_ctx_entries.append(f'"{k}": ""')
         initial_ctx_str = ", ".join(initial_ctx_entries)
         
         code_lines.append(f'    initial_state = {{"messages": [], "context": {{{initial_ctx_str}}}, "next_action": ""}}')

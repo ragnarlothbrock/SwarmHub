@@ -21,8 +21,8 @@ By separating the infrastructure (the framework) from the execution logic (your 
 ## ⚡ Key Features
 
 * **Fluent Programmatic SDK:** Design non-linear multi-agent networks using clean, chainable, human-readable Python commands supporting advanced memory layouts and capability server registries.
-* **Universal State Persistence & Memory:** Track long-running conversation loops using backend-agnostic checkpointers (SQLite, In-Memory, etc.) that cross-compile cleanly into native runtime savers or persistent local offline validation checkpoints.
-* **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network `sse`/`http` transport nodes with granular, least-privilege permission scoping at the node level.
+* **Universal State Persistence & Memory:** Track long-running conversation loops using backend-agnostic checkpointers (SQLite, In-Memory, etc.) that cross-compile cleanly into isolated native runtime saver tables (`swarmhub_checkpoints`) protecting your data boundaries.
+* **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network transport nodes with granular, least-privilege permission scoping at the node level.
 * **Decentralized Cognitive Blob Hub:** A global package manager utility capable of downloading verified community code assets dynamically from any public GitHub repository using a simple `owner/repo/blob_slug` identifier pool, paired with an interactive packaging generator wizard.
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
@@ -41,9 +41,101 @@ SwarmHub/
 │   ├── parsers/             # AST-driven memory and tool reverse-engineers
 │   ├── emitters/            # Framework-specific native code compilers & checkpointers
 │   └── cli.py               # Global Command Line interface console router
-├── blobs/                   # Business logic, local prompts, and installed code items
-├── dist/                    # Staged compilation code exports and registry builds
-└── tests/                   # Automated cross-framework ring validation test suite
+├── blobs/                   # Cognitive Layer: Framework-agnostic isolated code modules (e.g., advanced_rag/)
+├── tools/                   # Capability Layer: External tools and background MCP service daemons
+├── examples/                # Composition Layer: Declarative blueprint maps and local source documents
+├── dist/                    # Production Layer: Cross-compiled target framework executable outputs
+└── tests/                   # Verification Layer: Automated cross-framework ring validation test suite
+```
+
+---
+
+## 🔥 Showcase: Advanced Self-Correcting (Corrective) RAG Swarm
+
+SwarmHub shines when managing complex, non-linear feedback loops that must execute across entirely different structural frameworks. This showcase highlights a self-correcting RAG network executing on local **Llama 3.2** inference engines via an embedded, disk-persisted **ChromaDB HNSW vector database** connected via standard I/O sub-process channels.
+
+### The Non-Linear Self-Correction Workflow Pattern
+1. **`document_retriever`**: Queries a persistent background vector database daemon using high-dimensional embeddings.
+2. **`context_grader`**: Passes the retrieved context chunks to Llama 3.2 to run a binary evaluation. If relevant, it signals `SYNTHESIZE`. If irrelevant or mismatched, it triggers `REWRITE`.
+3. **`query_rewriter`**: Runs if flagged for a rewrite. It strips out query noise, evolves the prompt keywords, loops back to step 1, and runs a second-pass precision retrieval.
+4. **`synthesis_generator`**: Synthesizes the grounded final response to the user with an anti-hallucination guarantee.
+
+### 1. The Declarative Composition Blueprint (`examples/advanced_rag_swarm.py`)
+
+```python
+import os
+from swarmhub.core.builder import SwarmWorkflow
+from swarmhub.emitters.langgraph import LangGraphEmitter
+from swarmhub.emitters.crewai import CrewAIEmitter
+from swarmhub.emitters.autogen import AutoGenEmitter
+
+def build_and_compile_advanced_rag():
+    workflow = SwarmWorkflow(name="advanced-corrective-rag-swarm")
+
+    # Target local Ollama runtime engines using OpenAI-compatible formats
+    workflow.configure_runtime(provider="openai", model="llama3.2:3b", temperature=0.1)
+
+    # Mount a persistent relational memory layer
+    workflow.configure_memory(backend="sqlite", thread_id="local-rag-session-001", connection_string="dist/advanced_rag/rag_memory_vault.db")
+
+    # Register an external Model Context Protocol (MCP) vector service daemon
+    workflow.register_mcp_server(name="vector_store_service", transport="stdio", endpoint="python", args=["tools/advanced_rag/vector_service_daemon.py"])
+
+    # Establish the explicit type-safe global context state contract schema
+    workflow.set_state_schema({
+        "user_query": "str",
+        "search_query": "str",
+        "retrieved_chunks": "str",
+        "grade_status": "str",
+        "loop_counter": "int"
+    })
+
+    # Add execution nodes bound to framework-agnostic cognitive blobs
+    workflow.add_step(node_id="document_retriever", executor_reference="blobs/advanced_rag/rag_retriever.py", is_entry_point=True, interfaces=["vector_store_service"])
+    workflow.add_step(node_id="context_grader", executor_reference="blobs/advanced_rag/rag_grader.py")
+    workflow.add_step(node_id="query_rewriter", executor_reference="blobs/advanced_rag/rag_rewriter.py")
+    workflow.add_step(node_id="synthesis_generator", executor_reference="blobs/advanced_rag/rag_generator.py")
+
+    # Wire up non-linear routing and recursive repair loops
+    workflow.add_route(from_node="document_retriever", to_node="context_grader", condition_trigger="PROCEED")
+    workflow.add_route(from_node="context_grader", to_node="synthesis_generator", condition_trigger="SYNTHESIZE")
+    workflow.add_route(from_node="context_grader", to_node="query_rewriter", condition_trigger="REWRITE")
+    workflow.add_route(from_node="query_rewriter", to_node="document_retriever", condition_trigger="RETRY")
+
+    # Compile the blueprint and export to native framework targets
+    universal_spec = workflow.build_spec()
+    target_dir = "dist/advanced_rag"
+    
+    LangGraphEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_langgraph.py"))
+    CrewAIEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_crewai.py"))
+    AutoGenEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_autogen.py"))
+
+if __name__ == "__main__":
+    build_and_compile_advanced_rag()
+```
+
+### 2. Running and Verifying Cross-Compiled Frameworks
+
+Because SwarmHub compiles true framework-agnostic topologies, your code blobs will execute identically with live interactive terminal prompt gates across all three major platforms.
+
+Execute the builder script to compile your targets:
+```bash
+python3 examples/advanced_rag_swarm.py
+```
+
+Launch the native **LangGraph** Functional State Graph:
+```bash
+python3 dist/advanced_rag/compiled_rag_langgraph.py
+```
+
+Launch the native **CrewAI** Task-Driven State Machine Runner:
+```bash
+python3 dist/advanced_rag/compiled_rag_crewai.py
+```
+
+Launch the native **AutoGen** Conversational Participant State Machine Runner:
+```bash
+python3 dist/advanced_rag/compiled_rag_autogen.py
 ```
 
 ---
@@ -71,20 +163,20 @@ agent_system = (
     SwarmWorkflow(name="corporate-triage-swarm")
     .configure_runtime(provider="openai", model="gpt-4o", temperature=0.0)
     
-    # 💾 1. Configure Abstract State Persistence Checkpointing
+    # 💾 Configure Abstract State Persistence Checkpointing
     .configure_memory(backend="sqlite", thread_id="session-tx-777", connection_string="swarmhub_memory.db")
     
-    # 🔌 2. Register Global External MCP Capability Servers
+    # 🔌 Register Global External MCP Capability Servers
     .register_mcp_server(name="secure_db", transport="stdio", endpoint="uvx", args=["mcp-server-db"])
     
-    # 📝 3. Enforce an explicit type-safe global context state contract
+    # 📝 Enforce an explicit type-safe global context state contract
     .set_state_schema({
         "customer_id": "str",
         "account_balance": "float",
         "ticket_priority": "int"
     })
     
-    # 🔒 4. Register nodes with local tool hooks and granular MCP interface privileges
+    # 🔒 Register nodes with local tool hooks and granular MCP interface privileges
     .add_step("classifier", "blobs/triage.py", is_entry_point=True, tools=["db_lookup"], interfaces=["secure_db"])
     .add_step("processor", "blobs/refund.py")
     

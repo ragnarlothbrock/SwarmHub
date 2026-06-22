@@ -1,3 +1,35 @@
+# === SwarmHub Environment Exclusions ===
 .venv/
+venv/
+ENV/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# === Framework Caches & Project Telemetry ===
+.user_local_cache/
+.crewai/
+.autogen/
+
+# === Data & Embedded Vector Storage Layers ===
+# Exclude raw documents and processed tracking chunks
+examples/documents/*
+!examples/documents/.gitkeep
+
+# Exclude disk-persisted vector storage vaults
+dist/chroma_vector_vault/
+dist/advanced_rag/chroma_vector_vault/
+
+# === Relational State Persistence & Memories ===
+# Exclude SQLite thread saver binaries and historical logs
+*.db
+*.db-journal
+dist/advanced_rag/*.db
+dist/advanced_rag/*.db-journal
+
+# === Operating System Noise ===
+.DS_Store
+Thumbs.db

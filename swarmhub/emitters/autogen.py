@@ -6,6 +6,9 @@ class AutoGenEmitter:
     """
     Compiles a UniversalAgentSpec declarative layout object down into 
     native, executable Microsoft AutoGen GroupChat Python code with thread memory persistence and MCP tools.
+    
+    Generates dynamic state-machine graph routers, embedded schema verification contracts,
+    and automatic user interaction entry gates.
     """
     def __init__(self, spec: UniversalAgentSpec, inline_blobs: bool = False):
         self.spec = spec
@@ -98,7 +101,7 @@ class AutoGenEmitter:
             code_lines.append(f'    name="{node.id}",')
             tools_manifest = f" Enabled local tools: {node.tools}." if node.tools else ""
             iface_manifest = f" Authorized MCP Interfaces: {node.interfaces}." if node.interfaces else ""
-            code_lines.append(f'    system_message="{self.spec.system_prompt} You operate code blob reference: {node.executor_reference}.{tools_manifest}{iface_manifest}",')
+            code_lines.append(f'    system_message="{self.spec.system_prompt or "Conversational Agent Entity."} You operate code blob reference: {node.executor_reference}.{tools_manifest}{iface_manifest}",')
             code_lines.append('    llm_config=llm_config,')
             code_lines.append('    human_input_mode="NEVER"')
             code_lines.append(')\n')
@@ -131,22 +134,30 @@ class AutoGenEmitter:
         code_lines.append('# 8. Execution and Localized Blob Verification Pipeline')
         code_lines.append('if __name__ == "__main__":')
         code_lines.append('    print("🚀 Running compiled SwarmHub execution pipeline validation...")')
-        code_lines.append('    print("⚠️ [Mode: Local Offline Execution] Chat actor verification pass ignited.\\n")')
+        code_lines.append('    print("⚠️ [Mode: Local Offline Execution] Conversational state-machine verification pass ignited.\\n")')
         
         if backend == "sqlite":
             code_lines.extend([
                 f'    db = sqlite3.connect("{conn_str}")',
                 '    cursor = db.cursor()',
-                '    cursor.execute("CREATE TABLE IF NOT EXISTS checkpoints (thread_id TEXT PRIMARY KEY, state_json TEXT)")',
+                '    cursor.execute("CREATE TABLE IF NOT EXISTS swarmhub_checkpoints (thread_id TEXT PRIMARY KEY, state_json TEXT)")',
                 '    db.commit()',
-                f'    cursor.execute("SELECT state_json FROM checkpoints WHERE thread_id = \'{thread_id}\'")',
+                f'    cursor.execute("SELECT state_json FROM swarmhub_checkpoints WHERE thread_id = \'{thread_id}\'")',
                 '    row = cursor.fetchone()',
             ])
+        
+        if self.spec.state_schema and "user_query" in self.spec.state_schema:
+            code_lines.append('    user_prompt = input("❓ Enter your workflow query: ")')
         
         initial_ctx_entries = []
         if self.spec.state_schema:
             for k in self.spec.state_schema.keys():
-                initial_ctx_entries.append(f'"{k}": ""')
+                if k == "user_query":
+                    initial_ctx_entries.append('"user_query": user_prompt')
+                elif self.spec.state_schema[k] in ("int", "float"):
+                    initial_ctx_entries.append(f'"{k}": 0')
+                else:
+                    initial_ctx_entries.append(f'"{k}": ""')
         initial_ctx_str = ", ".join(initial_ctx_entries)
         
         code_lines.append(f'    default_state = {{"messages": [], "context": {{{initial_ctx_str}}}, "next_action": ""}}')
@@ -154,7 +165,7 @@ class AutoGenEmitter:
         if backend == "sqlite":
             code_lines.extend([
                 '    if row:',
-                '        print("   ⏳ [Memory] Found active checkpoint snapshot. Re-hydrating context state...")',
+                '        print("    ⏳ [Memory] Found active checkpoint snapshot. Re-hydrating context state...")',
                 '        state = json.loads(row[0])',
                 '    else:',
                 '        state = default_state'
@@ -162,35 +173,72 @@ class AutoGenEmitter:
         else:
             code_lines.append('    state = default_state')
         
-        code_lines.append('    ')
-        
+        code_lines.append('\n    # Target framework execution state-machine routing configuration maps')
+        code_lines.append('    NODES_CONFIG = {')
         for node in self.spec.topology.nodes:
             import_path = node.executor_reference.replace('.py', '').replace('/', '.')
-            code_lines.append(f'    print("--- 🟢 Entering Conversable Actor Node: {node.id} ---")')
-            code_lines.append(f'    print("    🔒 [Permissions] Authorized MCP Interfaces: {node.interfaces}")')
+            code_lines.append(f'        "{node.id}": {{"import_path": "{import_path}", "interfaces": {node.interfaces}, "inline_f": "_inline_{node.id}" if hasattr(sys.modules[__name__], "_inline_{node.id}") else None}},')
+        code_lines.append('    }\n')
+
+        # ✅ FIXED: Symmetrically normalizes the table mapping keys during the emission loop pass
+        code_lines.append('    ROUTING_TABLE = {')
+        for node in self.spec.topology.nodes:
+            code_lines.append(f'        "{node.id}": {{')
+            for edge in node.transitions:
+                cond = edge.on_condition.upper()
+                if cond.startswith("GOTO_"):
+                    cond = cond.replace("GOTO_", "", 1)
+                code_lines.append(f'            "{cond}": "{edge.target_node}",')
+            code_lines.append('            "END": "END"')
+            code_lines.append('        },')
+        code_lines.append('    }')
+
+        code_lines.extend([
+            f'\n    current_node = "{self.spec.topology.initial_node}"',
+            '    while current_node and current_node != "END":',
+            '        cfg = NODES_CONFIG.get(current_node)',
+            '        if not cfg:',
+            '            break',
+            '        print(f"\\n--- 🟢 Entering Conversable Actor Node: {current_node} ---")',
+            '        print(f"    🔒 [Permissions] Authorized MCP Interfaces: {cfg[\'interfaces\']}")',
+            '        ',
+            '        try:',
+            '            SharedContextContract(**state["context"])',
+            '        except Exception as contract_err:',
+            '            print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {current_node}: {contract_err}")',
+            '        ',
+            '        try:',
+            '            if cfg["inline_f"] and cfg["inline_f"] in globals():',
+            '                state = globals()[cfg["inline_f"]](state)',
+            '            else:',
+            '                module = importlib.import_module(cfg["import_path"])',
+            '                state = module.run(state)',
+            '            ',
+            '            SharedContextContract(**state["context"])',
+        ])
+
+        if backend == "sqlite":
+            code_lines.extend([
+                f'            cursor.execute("INSERT OR REPLACE INTO swarmhub_checkpoints VALUES (\'{thread_id}\', ?)", (json.dumps(state),))',
+                '            db.commit()',
+            ])
+
+        code_lines.extend([
+            '        except Exception as e:',
+            '            print(f"    ❌ Execution/Contract Fault inside {current_node}: {e}")',
+            '            break',
+            '        ',
+            '        action = state.get("next_action", "PROCEED").upper()',
+            '        if action.startswith("GOTO_"):',
+            '            action = action.replace("GOTO_", "", 1)',
+            '        current_node = ROUTING_TABLE.get(current_node, {}).get(action, "END")',
+        ])
             
-            code_lines.append('    try:')
-            code_lines.append('        SharedContextContract(**state["context"])')
-            code_lines.append('    except Exception as contract_err:')
-            code_lines.append(f'        print(f"    ⚠️ [Contract Breakage] Incoming schema anomaly caught at entry of {node.id}: {{contract_err}}")')
-            
-            code_lines.append('    try:')
-            if self.inline_blobs:
-                code_lines.append(f'        state = _inline_{node.id}(state)')
-            else:
-                code_lines.append(f'        module = importlib.import_module("{import_path}")')
-                code_lines.append(f'        state = module.run(state)')
-            code_lines.append('        SharedContextContract(**state["context"])')
-            if backend == "sqlite":
-                code_lines.extend([
-                    f'        cursor.execute("INSERT OR REPLACE INTO checkpoints VALUES (\'{thread_id}\', ?)", (json.dumps(state),))',
-                    '        db.commit()'
-                ])
-            code_lines.append(f'    except Exception as e:')
-            code_lines.append(f'        print(f"    ❌ Execution/Contract Fault inside {node.id}: {{e}}")\n')
-            
-        code_lines.append('    print("\\n🏁 Local AutoGen Participant Room Pipeline Successfully Executed!")')
-        code_lines.append('    print("Final Verified State Context Payload:", state["context"])')
+        code_lines.extend([
+            '\n    print("\\n🏁 Local AutoGen Participant Room Pipeline Successfully Executed!")',
+            '    print("Final Verified State Context Payload:", state["context"])',
+        ])
+
         if backend == "sqlite":
             code_lines.append('    db.close()')
 
