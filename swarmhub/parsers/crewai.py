@@ -129,6 +129,8 @@ class CrewAIParser:
         # Fallback Source-Slicing Mode
         source_lines = self.source_code.split("\n")
         tree = ast.parse(self.source_code)
+        
+        # Fixed alignment initialization call down below
         visitor = CrewAIEASTVisitor(source_lines)
         visitor.visit(tree)
 
@@ -152,12 +154,22 @@ class CrewAIParser:
                     f"    # Task Context: {desc.strip()}\n"
                     "    state['context']['last_completed_step'] = '" + node_id + "'\n"
                     "    return state\n"
-                )
+                    )
                 
-            with open(f"blobs/{node_id}.py", "w") as f:
+            with open(f"blobs/{node_id}.py", "w", encoding="utf-8") as f:
                 f.write(blob_code)
                 
             processed_nodes.append(WorkflowNode(**task_data))
+
+        if not processed_nodes:
+            processed_nodes.append(WorkflowNode(
+                id="unknown_start",
+                executor_type="opaque_blob",
+                executor_reference="blobs/unknown_start.py",
+                transitions=[],
+                tools=[],
+                interfaces=[]
+            ))
 
         return UniversalAgentSpec(
             name=self.agent_name,
@@ -167,7 +179,7 @@ class CrewAIParser:
             system_prompt="Extracted sequentially from legacy CrewAI manifest.",
             topology=WorkflowTopology(
                 type="Sequential",
-                initial_node=processed_nodes[0].id if processed_nodes else "unknown_start",
+                initial_node=processed_nodes[0].id,
                 nodes=processed_nodes
             )
         )

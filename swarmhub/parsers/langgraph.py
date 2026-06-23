@@ -24,6 +24,19 @@ class LangGraphASTVisitor(ast.NodeVisitor):
         # Global Interfaces Layer Pool
         self.interfaces: List[InterfaceConfig] = []
 
+    def _resolve_node_name(self, node: ast.AST) -> str:
+        """Converts an abstract AST expression or reference safely into a human-readable identifier."""
+        if isinstance(node, ast.Constant):
+            return str(node.value)
+        elif isinstance(node, ast.Name):
+            return node.id
+        else:
+            try:
+                # Safe unparse fallback to serialize complex dynamic lookups/ternaries without object pointer leaks
+                return ast.unparse(node).strip().replace("'", "").replace('"', "")
+            except Exception:
+                return "unknown_node"
+
     def visit_FunctionDef(self, node: ast.FunctionDef):
         """Locates and slices the raw Python string body of legacy node functions."""
         start_line = node.lineno - 1
@@ -77,23 +90,23 @@ class LangGraphASTVisitor(ast.NodeVisitor):
             
             if method_name == "add_node" and len(node.args) >= 2:
                 arg1, arg2 = node.args[0], node.args[1]
-                if isinstance(arg1, ast.Constant) and isinstance(arg2, ast.Name):
-                    node_id = arg1.value
-                    func_pointer = arg2.id
-                    self.nodes.append({
-                        "id": node_id,
-                        "executor_type": "opaque_blob",
-                        "executor_reference": f"blobs/{node_id}.py",
-                        "transitions": [],
-                        "tools": [],
-                        "interfaces": [],
-                        "_associated_function": func_pointer
-                    })
+                node_id = self._resolve_node_name(arg1)
+                func_pointer = self._resolve_node_name(arg2)
+                
+                self.nodes.append({
+                    "id": node_id,
+                    "executor_type": "opaque_blob",
+                    "executor_reference": f"blobs/{node_id}.py",
+                    "transitions": [],
+                    "tools": [],
+                    "interfaces": [],
+                    "_associated_function": func_pointer
+                })
 
             elif method_name == "add_edge" and len(node.args) >= 2:
                 arg1, arg2 = node.args[0], node.args[1]
-                val1 = arg1.value if isinstance(arg1, ast.Constant) else getattr(arg1, 'id', str(arg1))
-                val2 = arg2.value if isinstance(arg2, ast.Constant) else getattr(arg2, 'id', str(arg2))
+                val1 = self._resolve_node_name(arg1)
+                val2 = self._resolve_node_name(arg2)
                 
                 if val1 == "START":
                     self.initial_node = val2
@@ -104,11 +117,8 @@ class LangGraphASTVisitor(ast.NodeVisitor):
                 first_arg = node.args[0]
                 if isinstance(first_arg, ast.List):
                     for elt in first_arg.elts:
-                        if isinstance(elt, ast.Name):
-                            self.globally_bound_tools.append(elt.id)
-                        elif isinstance(elt, ast.Constant):
-                            self.globally_bound_tools.append(str(elt.value))
-                    
+                        self.globally_bound_tools.append(self._resolve_node_name(elt))
+                        
         self.generic_visit(node)
 
 
@@ -137,7 +147,7 @@ class LangGraphParser:
             
             if func_name and func_name in visitor.function_bodies:
                 blob_code = visitor.function_bodies[func_name]
-                with open(f"blobs/{node_id}.py", "w") as f:
+                with open(f"blobs/{node_id}.py", "w", encoding="utf-8") as f:
                     f.write(blob_code)
             
             transitions = []
@@ -153,6 +163,23 @@ class LangGraphParser:
                 node_data["tools"] = list(set(visitor.globally_bound_tools))
                 
             processed_nodes.append(WorkflowNode(**node_data))
+
+        # Enforce relational consistency constraints across Pydantic initialization tracking thresholds
+        initial_node = visitor.initial_node
+        if processed_nodes:
+            if not initial_node or not any(n.id == initial_node for n in processed_nodes):
+                initial_node = processed_nodes[0].id
+        else:
+            # Inject structural safety placeholder node if the crawler scraped zero target functions
+            processed_nodes.append(WorkflowNode(
+                id="unknown_start",
+                executor_type="opaque_blob",
+                executor_reference="blobs/unknown_start.py",
+                transitions=[],
+                tools=[],
+                interfaces=[]
+            ))
+            initial_node = "unknown_start"
 
         return UniversalAgentSpec(
             name=self.agent_name,
@@ -170,7 +197,7 @@ class LangGraphParser:
             system_prompt="Extracted automatically via SwarmHub static AST source-slicing.",
             topology=WorkflowTopology(
                 type="StateMachine",
-                initial_node=visitor.initial_node or "unknown_start",
+                initial_node=initial_node,
                 nodes=processed_nodes
             )
         )

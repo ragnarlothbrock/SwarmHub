@@ -1,0 +1,19 @@
+def run(state):
+    """
+    Generate answer using the vectorstore
+
+    Args:
+        state (dict): The current graph state
+
+    Returns:
+        state (dict): New key added to state, generation, that contains LLM generation
+    """
+    print("---GENERATE---")
+    question = state["question"]
+    documents = state["documents"]
+    if not isinstance(documents, list):
+        documents = [documents]
+
+    # RAG generation
+    generation = rag_chain.invoke({"documents": documents, "question": question})
+    return {"documents": documents, "question": question, "generation": generation}

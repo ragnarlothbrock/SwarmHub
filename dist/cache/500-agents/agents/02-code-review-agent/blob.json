@@ -1,0 +1,16 @@
+{
+    "registry_handle": "martinkovacevic/SwarmHub-Registry/02-code-review-agent",
+    "display_name": "Code Review Agent",
+    "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/02-code-review-agent",
+    "filters": {
+        "industry": "Customer Support",
+        "primary_task": "Code Review and Suggestion",
+        "original_framework": "LangChain",
+        "complexity_tier": "Intermediate",
+        "required_mcp_interfaces": [
+            "web_browser_stdio",
+            "file_server_stdio"
+        ],
+        "suggested_llm_baseline": "GPT-4o"
+    }
+}

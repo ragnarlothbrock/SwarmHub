@@ -1,0 +1,15 @@
+{
+    "registry_handle": "martinkovacevic/SwarmHub-Registry/02-clinical-trial-grader",
+    "display_name": "Clinical Trial Grader",
+    "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/tools/ingestion/mock_scraped_repository/agents/02-clinical-trial-grader",
+    "filters": {
+        "industry": "Healthcare",
+        "primary_task": "Data Processing Pipeline",
+        "original_framework": "Vanilla Python",
+        "complexity_tier": "Intermediate",
+        "required_mcp_interfaces": [
+            "file_server_stdio"
+        ],
+        "suggested_llm_baseline": "Llama-3.2-3b"
+    }
+}

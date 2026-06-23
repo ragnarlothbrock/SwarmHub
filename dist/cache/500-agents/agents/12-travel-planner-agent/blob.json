@@ -1,0 +1,16 @@
+{
+    "registry_handle": "martinkovacevic/SwarmHub-Registry/12-travel-planner-agent",
+    "display_name": "Travel Planner Agent",
+    "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/12-travel-planner-agent",
+    "filters": {
+        "industry": "Customer Support",
+        "primary_task": "Personalized Travel Itinerary Creation",
+        "original_framework": "CrewAI",
+        "complexity_tier": "Intermediate",
+        "required_mcp_interfaces": [
+            "web_browser_stdio",
+            "file_server_stdio"
+        ],
+        "suggested_llm_baseline": "GPT-4o-mini"
+    }
+}

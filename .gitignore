@@ -32,4 +32,4 @@ dist/advanced_rag/*.db-journal
 
 # === Operating System Noise ===
 .DS_Store
-Thumbs.db
+Thumbs.dbdist/cache/

@@ -1,0 +1,977 @@
+[
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-game-builder-crew",
+        "display_name": "Conversational Matrix Routing for Game Building",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/game-builder-crew",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Collaborative Software Development Process Automation",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-industry-agents",
+        "display_name": "Industry-Specific Agent for Biomedical, Healthcare, and Finance Trends",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/industry-agents",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing for Industry-Specific Agents",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-instagram-post",
+        "display_name": "Marketing Analysis and Instagram Post Generation",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/instagram_post",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conduct amazing analysis of the products and competitors, providing in-depth insights to guide marketing strategies.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-job-posting",
+        "display_name": "Conversational Matrix Routing for AI Crew",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/job-posting",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automating Job Posting with CrewAI Framework",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-landing-page-generator",
+        "display_name": "AI Crew for Landing Pages",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/landing_page_generator",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-markdown-validator",
+        "display_name": "Conversational Markdown Syntax Review",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/markdown_validator",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automated Markdown Syntax Review",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-marketing-strategy",
+        "display_name": "Conversational Matrix Routing for AI Crew in Marketing Strategy",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/marketing_strategy",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automating Comprehensive Marketing Strategy Creation",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-match-profile-to-positions",
+        "display_name": "Automating CV Matching with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/match_profile_to_positions",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing for CV Matching",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-meta-quest-knowledge",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/meta_quest_knowledge",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Answering User Questions",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-prep-for-a-meeting",
+        "display_name": "Meeting Preparation Crew",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/prep-for-a-meeting",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conduct comprehensive research on each of the individuals and companies involved in the upcoming meeting. Gather information on recent news, achievements, professional background, and any relevant business activities.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-recruitment",
+        "display_name": "CrewAI Recruitment Automation",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/recruitment",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automate Recruitment Process with CrewAI",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-screenplay-writer",
+        "display_name": "Conversational Scriptwriting",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/screenplay_writer",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automatically generating a screenplay from a newsgroup post using agents with CrewAI",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-starter-template",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/starter_template",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Define agent role and backstory here",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-stock-analysis",
+        "display_name": "Stock Analysis Crew",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/stock_analysis",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing for Stock Analysis",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-surprise-trip",
+        "display_name": "Surprise Travel Planning CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/surprise_trip",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing for Surprise Travel Planning",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-trip-planner",
+        "display_name": "Trip Planning Crew",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/trip_planner",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Plan the best trip based on weather, season, and prices",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-chatbot-simulation-evaluation",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/chatbot-simulation-evaluation",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-chatbots",
+        "display_name": "Information Gathering Prompting in LangGraph",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/chatbots",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-code-assistant",
+        "display_name": "LangGraph Code Assistant",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/code_assistant",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-customer-support",
+        "display_name": "Customer Support Agent Loop",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/customer-support",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-delta-channel-dump",
+        "display_name": "Recover delta-channel state from a Postgres-backed LangGraph thread",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/delta-channel-dump",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-extraction",
+        "display_name": "Retries in LangGraph",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/extraction",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Error Handling and Recovery",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-human-in-the-loop",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/human_in_the_loop",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-lats",
+        "display_name": "LangGraph Lats Model Analysis",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/lats",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-llm-compiler",
+        "display_name": "LLM Compiler Documentation",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/llm-compiler",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-multi-agent",
+        "display_name": "Hierarchical Agent Teams for Multi-Agent Collaboration",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/multi_agent",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-plan-and-execute",
+        "display_name": "Plan and Execute in LangGraph",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/plan-and-execute",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-rag",
+        "display_name": "Rag",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/rag",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Agentic Architecture Automation",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-react-agent-from-scratch",
+        "display_name": "LangGraph React Agent from Scratch",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/react-agent-from-scratch.ipynb",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-react-agent-structured-output",
+        "display_name": "LangGraph React Agent Documentation",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/react-agent-structured-output.ipynb",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-reflection",
+        "display_name": "LangGraph Reflection Tutorial",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/reflection",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-reflexion",
+        "display_name": "Reflexion Documentation Archive",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/reflexion",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Beginner",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-rewoo",
+        "display_name": "Rewoo Directory Metadata",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/rewoo",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-run-id-langsmith",
+        "display_name": "LangGraph Documentation Archive",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/run-id-langsmith.ipynb",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Beginner",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-self-discover",
+        "display_name": "Self-Discovery in LangGraph",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/self-discover",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-subgraph",
+        "display_name": "LangGraph Documentation Archive",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/subgraph.ipynb",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Beginner",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-tool-calling",
+        "display_name": "LangGraph Documentation Archive",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/tool-calling.ipynb",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Beginner",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-tutorials",
+        "display_name": "LangChain SQL Agent",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/tutorials",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-usaco",
+        "display_name": "USACO LangGraph Tutorial",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/usaco",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/langgraph-web-navigation",
+        "display_name": "Web Voyager Documentation Retention",
+        "original_source_url": "https://github.com/langchain-ai/langgraph/tree/main/examples/web-navigation",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Beginner",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-content-creator-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/content_creator_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Matrix-based routing for conversational flows",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-email-auto-responder-flow",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/email_auto_responder_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-lead-score-flow",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/lead-score-flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-meeting-assistant-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/meeting_assistant_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automate the process of managing meetings, including scheduling, note-taking, and follow-up actions.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-self-evaluation-loop-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/self_evaluation_loop_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automated Self-Evaluation Loop",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-write-a-book-with-flows",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/write_a_book_with_flows",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-azure-postgresql",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_azure_postgresql",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Multi-Agent AI System for Shipment Data Management",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-chainlit",
+        "display_name": "Multi-Agent Chat Interface with AutoGen and Chainlit",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_chainlit",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-chess-game",
+        "display_name": "Conversational Chess Game",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_chess_game",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-dspy",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_dspy",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Matrix-based routing for conversational flows",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-fastapi",
+        "display_name": "AgentChat App with FastAPI",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_fastapi",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-graphrag",
+        "display_name": "GraphRAG Search Assistant",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_graphrag",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-streamlit",
+        "display_name": "Streamlit AgentChat Sample Application",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_streamlit",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-async-human-in-the-loop",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_async_human_in_the_loop",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Human-in-the-Loop System with Async Tool Call",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-chainlit",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_chainlit",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-chess-game",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_chess_game",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Simulating a chess game with two agents that play against each other, using tools to reason about the game state and make moves.",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-distributed-group-chat",
+        "display_name": "Distributed Group Chat Manager",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_distributed-group-chat",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-grpc-worker-runtime",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_grpc_worker_runtime",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-semantic-router",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_semantic_router",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-streaming-handoffs-fastapi",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_streaming_handoffs_fastapi",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-streaming-response-fastapi",
+        "display_name": "AutoGen-Core Streaming Chat API with FastAPI",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_streaming_response_fastapi",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-core-xlang-hello-python-agent",
+        "display_name": "Python Agent Interoperability Sample",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/core_xlang_hello_python_agent",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-gitty",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/gitty",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Assessing issue for repository and generating auto reply",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-task-centric-memory",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/task_centric_memory",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Evaluates precision and recall of task-centric memory retrieval",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-new-package",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/templates/new-package",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    }
+]
