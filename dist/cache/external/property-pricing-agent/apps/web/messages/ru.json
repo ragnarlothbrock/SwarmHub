@@ -1,0 +1,961 @@
+{
+  "admin": {
+    "dataSources": {
+      "title": "Источники данных",
+      "description": "Управление внешними источниками данных и интеграциями.",
+      "status": {
+        "connected": "Подключено",
+        "disconnected": "Отключено",
+        "error": "Ошибка"
+      },
+      "lastSync": "Последняя синхронизация",
+      "syncNow": "Синхронизировать",
+      "configure": "Настроить"
+    }
+  },
+  "agents": {
+    "title": "Find an Agent",
+    "subtitle": "Connect with professional real estate agents",
+    "noAgents": "No agents found",
+    "noAgentsDescription": "Try adjusting your filters or search criteria",
+    "verified": "Verified",
+    "rating": "{rating} rating",
+    "reviews": "{count} reviews",
+    "sales": "{count} sales",
+    "rentals": "{count} rentals",
+    "specialties": "Specialties",
+    "serviceAreas": "Service Areas",
+    "languages": "Languages",
+    "contact": "Contact Agent",
+    "scheduleViewing": "Schedule Viewing",
+    "viewProfile": "View Profile",
+    "filters": {
+      "title": "Filters",
+      "city": "City",
+      "specialty": "Specialty",
+      "minRating": "Minimum Rating",
+      "sortBy": "Sort By",
+      "rating": "Rating",
+      "listings": "Number of Listings",
+      "reviews": "Number of Reviews",
+      "clear": "Clear Filters"
+    },
+    "profile": {
+      "title": "Agent Profile",
+      "about": "About",
+      "listings": "Active Listings",
+      "contactInfo": "Contact Information",
+      "office": "Office",
+      "phone": "Phone",
+      "email": "Email",
+      "license": "License",
+      "agency": "Agency",
+      "noListings": "No active listings"
+    },
+    "contactForm": {
+      "title": "Contact {name}",
+      "name": "Your Name",
+      "email": "Your Email",
+      "phone": "Your Phone",
+      "inquiryType": "Inquiry Type",
+      "general": "General Inquiry",
+      "property": "Property Inquiry",
+      "financing": "Financing Options",
+      "viewing": "Schedule Viewing",
+      "message": "Message",
+      "messagePlaceholder": "Tell us how we can help you...",
+      "submit": "Send Message",
+      "success": "Message sent successfully!",
+      "successDescription": "The agent will get back to you soon."
+    },
+    "viewingForm": {
+      "title": "Schedule a Viewing",
+      "selectDate": "Select Date",
+      "selectTime": "Select Time",
+      "duration": "Duration (minutes)",
+      "notes": "Notes",
+      "notesPlaceholder": "Any special requests or questions?",
+      "submit": "Request Viewing",
+      "success": "Viewing request sent!",
+      "successDescription": "The agent will confirm your appointment soon."
+    },
+    "inquiries": {
+      "title": "Inquiries",
+      "noInquiries": "No inquiries yet",
+      "status": {
+        "new": "New",
+        "read": "Read",
+        "responded": "Responded",
+        "closed": "Closed"
+      }
+    },
+    "appointments": {
+      "title": "Appointments",
+      "noAppointments": "No appointments scheduled",
+      "status": {
+        "requested": "Requested",
+        "confirmed": "Confirmed",
+        "cancelled": "Cancelled",
+        "completed": "Completed"
+      }
+    }
+  },
+  "auth": {
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти",
+    "profile": "Профиль",
+    "settings": "Настройки",
+    "user": "Пользователь",
+    "login": {
+      "title": "С возвращением",
+      "description": "Введите email для входа в аккаунт",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@example.com",
+      "passwordLabel": "Пароль",
+      "forgotPassword": "Забыли пароль?",
+      "noAccount": "Нет аккаунта?",
+      "submit": "Войти",
+      "signUp": "Регистрация",
+      "orContinueWith": "Или продолжить через",
+      "or": "или",
+      "continueAsGuest": "Попробовать без аккаунта",
+      "tryDemo": "Попробовать Демо — без аккаунта"
+    },
+    "register": {
+      "title": "Создать аккаунт",
+      "description": "Введите данные для регистрации",
+      "fullNameLabel": "Полное имя",
+      "emailLabel": "Email",
+      "passwordLabel": "Пароль",
+      "confirmPasswordLabel": "Подтвердите пароль",
+      "haveAccount": "Уже есть аккаунт?",
+      "submit": "Создать аккаунт"
+    },
+    "forgotPassword": {
+      "title": "Забыли пароль?",
+      "description": "Введите email и мы отправим ссылку для сброса",
+      "emailLabel": "Email",
+      "submit": "Отправить ссылку",
+      "backToLogin": "Вернуться к входу",
+      "checkEmail": "Проверьте почту",
+      "resetSent": "Мы отправили ссылку для сброса пароля на ваш email."
+    },
+    "resetPassword": {
+      "title": "Сбросить пароль",
+      "description": "Введите новый пароль",
+      "newPasswordLabel": "Новый пароль",
+      "confirmPasswordLabel": "Подтвердите пароль",
+      "submit": "Сбросить пароль",
+      "success": "Пароль успешно сброшен"
+    },
+    "verifyEmail": {
+      "title": "Подтвердите email",
+      "description": "Мы отправили ссылку подтверждения на ваш email",
+      "checkInbox": "Проверьте почту и нажмите на ссылку подтверждения.",
+      "resend": "Отправить повторно",
+      "verified": "Email подтверждён"
+    },
+    "errors": {
+      "invalidCredentials": "Неверный email или пароль",
+      "emailRequired": "Email обязателен",
+      "passwordRequired": "Пароль обязателен",
+      "nameRequired": "Имя обязательно",
+      "passwordMismatch": "Пароли не совпадают",
+      "weakPassword": "Пароль должен содержать минимум 8 символов",
+      "emailAlreadyExists": "Аккаунт с таким email уже существует",
+      "invalidEmail": "Введите корректный email"
+    }
+  },
+  "cma": {
+    "steps": {
+      "subject": {
+        "title": "Subject Property",
+        "description": "Select the property to evaluate"
+      },
+      "comparables": {
+        "title": "Comparables",
+        "description": "Choose similar properties"
+      },
+      "adjustments": {
+        "title": "Adjustments",
+        "description": "Review value adjustments"
+      },
+      "preview": {
+        "title": "Preview",
+        "description": "Review the report"
+      },
+      "export": {
+        "title": "Export",
+        "description": "Download or share"
+      }
+    },
+    "subject": {
+      "searchPlaceholder": "Search by address, city, or property ID...",
+      "searchAriaLabel": "Search properties",
+      "searchButton": "Search",
+      "searching": "Searching...",
+      "selectedSubject": "Selected Subject Property",
+      "selected": "Selected",
+      "price": "Price:",
+      "area": "Area:",
+      "rooms": "Rooms:",
+      "type": "Type:",
+      "searchResults": "Search Results ({count})",
+      "property": "Property",
+      "roomsCount": "{count} rooms",
+      "nextComparables": "Next: Select Comparables"
+    },
+    "comparables": {
+      "selectRange": "Select {min}-{max} comparable properties. Drag to reorder by relevance.",
+      "refresh": "Refresh",
+      "finding": "Finding similar properties...",
+      "selected": "Selected:",
+      "selectMore": "Select at least {count} more",
+      "similarity": "Similarity",
+      "noComparables": "No comparable properties found. Try adjusting your search criteria.",
+      "selectedComparables": "Selected Comparables",
+      "roomsCount": "{count} rooms",
+      "property": "Property {id}",
+      "back": "Back",
+      "nextAdjustments": "Next: Review Adjustments"
+    },
+    "adjustments": {
+      "description": "Review and adjust the valuation factors for each comparable property. Positive adjustments increase the comparable's value; negative adjustments decrease it.",
+      "comparable": "Comparable {index}",
+      "similarity": "Similarity:",
+      "factor": "Factor",
+      "subject": "Subject",
+      "comparableLabel": "Comparable",
+      "adjPercent": "Adj. %",
+      "amount": "Amount",
+      "totalAdjustments": "Total Adjustments",
+      "adjustedPrice": "Adjusted Price:",
+      "adjustmentSummary": "Adjustment Summary",
+      "avgAdjustment": "Avg Adjustment",
+      "priceRange": "Price Range",
+      "medianPrice": "Median Price",
+      "back": "Back",
+      "nextPreview": "Next: Preview Report"
+    },
+    "preview": {
+      "noSubject": "No subject property selected",
+      "generating": "Generating CMA report...",
+      "generateReport": "Generate Report",
+      "noReport": "No report generated yet. Click Generate to create the CMA report.",
+      "tryAgain": "Try Again",
+      "back": "Back",
+      "nextExport": "Next: Export Options",
+      "executiveSummary": "Executive Summary",
+      "estimatedValue": "Estimated Market Value",
+      "range": "Range:",
+      "confidenceScore": "Confidence Score",
+      "confidenceHigh": "High",
+      "confidenceMedium": "Medium",
+      "confidenceLow": "Low",
+      "pricePerSqm": "Price per m²",
+      "subjectProperty": "Subject Property",
+      "location": "Location",
+      "area": "Area",
+      "rooms": "Rooms",
+      "type": "Type",
+      "comparables": "Comparables ({count})",
+      "property": "Property",
+      "score": "Score:",
+      "marketContext": "Market Context",
+      "avgPricePerSqm": "Avg Price/m²",
+      "medianPrice": "Median Price",
+      "trend": "Trend",
+      "inventory": "Inventory",
+      "listings": "{count} listings",
+      "failedGenerate": "Failed to generate report"
+    },
+    "export": {
+      "noReport": "No report available. Please go back and generate a report first.",
+      "back": "Back",
+      "reportGenerated": "Report Generated Successfully",
+      "reportReady": "Your Comparative Market Analysis report is ready for export.",
+      "pdfReport": "PDF Report",
+      "professionalFormat": "Professional format",
+      "downloading": "Downloading...",
+      "downloadPdf": "Download PDF",
+      "jsonData": "JSON Data",
+      "rawDataExport": "Raw data export",
+      "downloadJson": "Download JSON",
+      "shareLink": "Share Link",
+      "copyShareableUrl": "Copy shareable URL",
+      "copied": "Copied!",
+      "copyLink": "Copy Link",
+      "reportId": "Report ID:",
+      "created": "Created:",
+      "expires": "Expires:",
+      "createNew": "Create New Report",
+      "failedDownload": "Failed to download PDF"
+    }
+  },
+  "chat": {
+    "title": "AI Ассистент",
+    "description": "Задавайте вопросы о недвижимости, районах и рыночных трендах.",
+    "placeholder": "Введите сообщение...",
+    "send": "Отправить",
+    "aiLabel": "AI Ассистент",
+    "aiDisclaimer": "Этот ответ был сгенерирован ИИ. Проверяйте важную информацию самостоятельно.",
+    "aiDisclosureNotice": "Содержимое, сгенерированное ИИ, может быть не всегда точным. Для важных решений проконсультируйтесь с профессиональным риелтором или консультантом.",
+    "emptyState": {
+      "title": "Начните разговор",
+      "description": "Спросите меня о чём угодно касательно недвижимости.",
+      "suggestions": "Попробуйте спросить:"
+    },
+    "suggestions": {
+      "properties": "Какая недвижимость доступна в Варшаве?",
+      "neighborhood": "Расскажи о районе Мокотув",
+      "mortgage": "Какой будет платёж по ипотеке на 500 000 zł?",
+      "investment": "Является ли это хорошей инвестицией?"
+    },
+    "loading": {
+      "thinking": "Думаю...",
+      "searching": "Поиск недвижимости...",
+      "analyzing": "Анализ данных рынка...",
+      "calculating": "Вычисление...",
+      "generating": "Генерация ответа...",
+      "connecting": "Подключение к ИИ..."
+    },
+    "status": {
+      "streaming": "ИИ печатает...",
+      "processing": "Обработка вашего запроса...",
+      "retrieving": "Получение информации...",
+      "completing": "Почти готово..."
+    },
+    "errors": {
+      "failed": "Не удалось отправить сообщение",
+      "timeout": "Время запроса истекло",
+      "network": "Ошибка сети. Проверьте ваше подключение.",
+      "rateLimit": "Слишком много запросов. Подождите немного.",
+      "server": "Ошибка сервера. Попробуйте позже.",
+      "unauthorized": "Требуется аутентификация. Войдите в систему.",
+      "forbidden": "У вас нет прав для выполнения этого действия.",
+      "notFound": "Запрошенный ресурс не найден.",
+      "unknown": "Произошла неизвестная ошибка. Попробуйте снова.",
+      "apology": "Прошу прощения, но произошла ошибка: {error}. Попробуйте снова."
+    },
+    "input": {
+      "placeholderStarted": "Спросите о недвижимости, трендах рынка или инвестиционных советах...",
+      "placeholderEmpty": "Введите ваш вопрос, чтобы начать...",
+      "ariaLabel": "Ввод сообщения чата",
+      "ariaLabelSending": "Отправка...",
+      "ariaLabelSend": "Отправить сообщение"
+    },
+    "sources": {
+      "title": "Цитаты",
+      "titleWithCount": "Цитаты ({count})",
+      "truncated": "(сокращено)",
+      "showSnippet": "Показать фрагмент",
+      "hideSnippet": "Скрыть фрагмент",
+      "snippetLength": "({chars} символов)",
+      "source": "Источник",
+      "validated": "Проверено",
+      "duplicate": "дубликат",
+      "confidence": "Уверенность",
+      "confidenceScore": "Уровень уверенности: {score}%",
+      "page": "с. {page}",
+      "chunk": "фрагмент {index}",
+      "summary": {
+        "total": "{count} всего",
+        "unique": "{count} уникальных",
+        "duplicates": "{count} дубликатов",
+        "avgConfidence": "Ср. уверенность: {score}%"
+      },
+      "types": {
+        "pdf": "PDF",
+        "docx": "DOCX",
+        "web": "Web",
+        "database": "База данных",
+        "api": "API",
+        "unknown": "Источник"
+      }
+    },
+    "retry": {
+      "button": "Повторить",
+      "requestId": "request_id={id}"
+    },
+    "poweredBy": {
+      "title": "Работает на:",
+      "description": "Маршрутизация через несколько поставщиков LLM с интеграциями инструментов для поиска, анализа цен и ипотечных расчётов."
+    },
+    "debug": {
+      "trace": "Отладочная трассировка ({count})",
+      "intermediateSteps": "Промежуточные шаги"
+    },
+    "emptyStates": {
+      "noHistory": {
+        "title": "Нет истории бесед",
+        "description": "Начните новый разговор, задав вопрос."
+      },
+      "noResults": {
+        "title": "Результаты не найдены",
+        "description": "Попробуйте переформулировать вопрос или изменить критерии поиска."
+      },
+      "noSources": {
+        "title": "Нет доступных источников",
+        "description": "ИИ не смог найти релевантные источники для этого запроса."
+      }
+    }
+  },
+  "cityOverview": {
+    "title": "Обзор городов",
+    "description": "Сравнение районов и цен на недвижимость по городам.",
+    "selectCity": "Выберите город",
+    "averagePrice": "Средняя цена",
+    "pricePerSqm": "Цена за м²",
+    "inventory": "Активные объявления",
+    "neighborhoods": "Районы"
+  },
+  "common": {
+    "appName": "AI Estate",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "submit": "Отправить",
+    "retry": "Повторить",
+    "refresh": "Обновить",
+    "export": "Экспорт",
+    "search": "Поиск",
+    "calculate": "Рассчитать",
+    "create": "Создать",
+    "clear": "Очистить",
+    "update": "Обновить",
+    "loading": "Загрузка...",
+    "searching": "Поиск...",
+    "exporting": "Экспорт...",
+    "saving": "Сохранение...",
+    "testing": "Тестирование...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "toggleTheme": "Сменить тему",
+    "close": "Закрыть",
+    "back": "Назад",
+    "next": "Далее",
+    "previous": "Назад",
+    "yes": "Да",
+    "no": "Нет",
+    "all": "Все",
+    "none": "Нет",
+    "any": "Любой",
+    "other": "Другое",
+    "results": "Результаты",
+    "noResults": "Нет результатов",
+    "tryAgain": "Попробуйте снова",
+    "skipToContent": "Перейти к основному содержимому"
+  },
+  "demo": {
+    "banner": "Демо-режим — доступен поиск и данные по городам",
+    "login": "Войти",
+    "lockedFeature": "Войдите, чтобы получить доступ",
+    "signInForFull": "Войдите для AI-ассистента и других функций",
+    "signUpCta": "Зарегистрируйтесь для доступа ко всем функциям"
+  },
+  "documents": {
+    "title": "Documents",
+    "description": "Manage your property documents, contracts, and reports",
+    "uploadButton": "Upload Document",
+    "refresh": "Refresh",
+    "emptyState": {
+      "title": "No documents yet",
+      "description": "Upload your first document to start organizing your property-related files.",
+      "uploadFirst": "Upload Your First Document"
+    },
+    "upload": {
+      "title": "Upload Document",
+      "dragDrop": "Drag & drop a file here",
+      "orClick": "or click to browse",
+      "supportedTypes": "Supports: PDF, DOC, DOCX, JPG, PNG (max 10MB)",
+      "category": "Category",
+      "categoryPlaceholder": "Select category (optional)",
+      "description": "Description",
+      "descriptionPlaceholder": "Optional description...",
+      "tags": "Tags",
+      "tagsPlaceholder": "contract, urgent, reviewed (comma-separated)",
+      "expiryDate": "Expiry Date",
+      "uploadButton": "Upload Document",
+      "uploading": "Uploading...",
+      "success": "Upload Successful!",
+      "cancel": "Cancel"
+    },
+    "categories": {
+      "selectCategory": "Select category (optional)",
+      "contract": "Contract",
+      "inspection": "Inspection Report",
+      "photo": "Photo",
+      "financial": "Financial Document",
+      "other": "Other",
+      "allCategories": "All Categories"
+    },
+    "list": {
+      "searchPlaceholder": "Search documents...",
+      "sortByDate": "Sort by Date",
+      "sortByName": "Sort by Name",
+      "sortBySize": "Sort by Size",
+      "ascending": "Ascending",
+      "descending": "Descending",
+      "noResults": "No documents match your filters",
+      "download": "Download",
+      "delete": "Delete",
+      "deleteConfirm": "Delete \"{name}\"? This cannot be undone.",
+      "deleting": "Deleting...",
+      "loadMore": "Load More ({page}/{total})",
+      "loading": "Loading...",
+      "expired": "Expired",
+      "expiringSoon": "Expiring Soon",
+      "expires": "Expires",
+      "added": "Added"
+    },
+    "errors": {
+      "loadFailed": "Failed to Load Documents",
+      "deleteFailed": "Failed to delete document",
+      "invalidType": "Invalid file type",
+      "tooLarge": "File too large. Maximum size: 10MB",
+      "uploadFailed": "Upload failed"
+    },
+    "expiryAlert": {
+      "singular": "{count} document expiring soon",
+      "plural": "{count} documents expiring soon",
+      "description": "The following documents will expire within 30 days:"
+    }
+  },
+  "error": {
+    "generic": "Что-то пошло не так",
+    "notFound": "Страница не найдена",
+    "unauthorized": "Нет авторизации",
+    "forbidden": "Доступ запрещён",
+    "serverError": "Ошибка сервера",
+    "tryAgain": "Попробуйте позже",
+    "goHome": "На главную"
+  },
+  "favorites": {
+    "title": "Моё избранное",
+    "description": "Сохранённая недвижимость.",
+    "emptyState": {
+      "title": "Нет избранных объектов",
+      "description": "Начните просмотр и сохраняйте понравившиеся объекты.",
+      "browseButton": "Просмотреть недвижимость"
+    },
+    "collections": {
+      "title": "Коллекции",
+      "newCollection": "Новая коллекция",
+      "collectionName": "Название коллекции",
+      "create": "Создать",
+      "delete": "Удалить коллекцию"
+    }
+  },
+  "home": {
+    "title": "AI Ассистент по Недвижимости",
+    "subtitle": "Интеллектуальный поиск недвижимости, рыночная аналитика и инвестиционные инсайты на базе продвинутого AI.",
+    "startSearching": "Начать поиск",
+    "askAssistant": "Спросить ассистента",
+    "askAssistantDemo": "Войти для AI-ассистента",
+    "features": {
+      "search": {
+        "title": "Умный поиск",
+        "description": "Находите недвижимость с помощью запросов на естественном языке"
+      },
+      "analytics": {
+        "title": "Рыночная аналитика",
+        "description": "Отслеживайте тренды и анализируйте рыночные данные"
+      },
+      "assistant": {
+        "title": "AI Ассистент",
+        "description": "Получайте персонализированные рекомендации"
+      },
+      "investment": {
+        "title": "Инвестиционные инструменты",
+        "description": "Анализируйте ROI и ипотечные опции"
+      }
+    }
+  },
+  "investment": {
+    "title": "Анализ инвестиций в недвижимость",
+    "description": "Оцените потенциальную доходность инвестиций.",
+    "purchasePrice": "Цена покупки",
+    "monthlyRent": "Месячная аренда",
+    "operatingExpenses": "Операционные расходы",
+    "vacancyRate": "Уровень вакантности (%)",
+    "appreciationRate": "Рост стоимости (%)",
+    "analyze": "Анализировать",
+    "results": {
+      "title": "Анализ инвестиций",
+      "capRate": "Капитализация",
+      "cashOnCash": "Cash on Cash",
+      "netOperatingIncome": "Чистый операционный доход",
+      "cashFlow": "Месячный денежный поток",
+      "roi": "ROI (1 год)",
+      "onePercentRule": "Правило 1%",
+      "onePercentRulePass": "Пройдено - Аренда ≥ 1% цены",
+      "onePercentRuleFail": "Не пройдено - Аренда < 1% цены"
+    },
+    "advanced": {
+      "title": "Расширенный анализ инвестиций",
+      "holdingPeriod": "Период владения (лет)",
+      "sellingCosts": "Расходы на продажу (%)",
+      "incomeGrowth": "Рост дохода (%)",
+      "expenseGrowth": "Рост расходов (%)"
+    }
+  },
+  "knowledge": {
+    "title": "База знаний",
+    "description": "Изучите понятия и терминологию недвижимости.",
+    "searchPlaceholder": "Поиск статей...",
+    "categories": {
+      "buying": "Руководство покупателя",
+      "selling": "Руководство продавца",
+      "mortgages": "Ипотека",
+      "investing": "Инвестиции",
+      "legal": "Правовые вопросы"
+    },
+    "noArticles": "Статьи не найдены"
+  },
+  "language": {
+    "switch": "Сменить язык",
+    "current": "Текущий язык: {language}",
+    "pl": "Польский",
+    "en": "Английский",
+    "ru": "Русский"
+  },
+  "marketTrends": {
+    "title": "Тренды рынка",
+    "description": "Анализ тенденций и статистики рынка недвижимости.",
+    "priceTrends": "Ценовые тренды",
+    "volumeTrends": "Объём продаж",
+    "byPropertyType": "По типу недвижимости",
+    "byLocation": "По местоположению",
+    "period": {
+      "month": "Последний месяц",
+      "quarter": "Последний квартал",
+      "year": "Последний год",
+      "all": "Всё время"
+    }
+  },
+  "mortgage": {
+    "title": "Ипотечный калькулятор",
+    "description": "Рассчитайте ежемесячный платёж и общую стоимость.",
+    "propertyPrice": "Стоимость недвижимости",
+    "downPayment": "Первоначальный взнос",
+    "downPaymentPercent": "Первоначальный взнос (%)",
+    "interestRate": "Процентная ставка (%)",
+    "loanTerm": "Срок кредита (лет)",
+    "calculate": "Рассчитать",
+    "results": {
+      "title": "Результаты расчёта",
+      "monthlyPayment": "Ежемесячный платёж",
+      "totalInterest": "Общие проценты",
+      "totalCost": "Общая стоимость",
+      "loanAmount": "Сумма кредита",
+      "downPaymentAmount": "Первоначальный взнос"
+    },
+    "tco": {
+      "title": "Полная стоимость владения",
+      "monthlyTco": "Ежемесячные расходы",
+      "annualTco": "Годовые расходы",
+      "maintenance": "Обслуживание",
+      "maintenanceHint": "Правило: 1-2% стоимости недвижимости в год",
+      "propertyTax": "Налог на недвижимость",
+      "insurance": "Страхование",
+      "utilities": "Коммунальные услуги"
+    }
+  },
+  "nav": {
+    "mainNavigation": "Основная навигация",
+    "home": "Главная",
+    "search": "Поиск",
+    "favorites": "Избранное",
+    "documents": "Документы",
+    "cities": "Города",
+    "assistant": "Ассистент",
+    "analytics": "Аналитика",
+    "agents": "Найти агентов",
+    "knowledge": "База знаний",
+    "settings": "Настройки",
+    "marketTrends": "Тренды рынка",
+    "savedSearches": "Сохранённые поиски",
+    "tools": "Инструменты"
+  },
+  "neighborhood": {
+    "title": "Информация о районе",
+    "score": {
+      "excellent": "Отлично",
+      "good": "Хорошо",
+      "fair": "Удовлетворительно",
+      "poor": "Плохо",
+      "veryPoor": "Очень плохо"
+    },
+    "components": {
+      "safety": "Безопасность",
+      "schools": "Школы",
+      "amenities": "Удобства",
+      "walkability": "Пешеходная доступность",
+      "greenSpace": "Зелёные зоны",
+      "publicTransport": "Общественный транспорт",
+      "restaurants": "Рестораны",
+      "shopping": "Магазины"
+    }
+  },
+  "portfolio": {
+    "title": "Анализ портфеля",
+    "description": "Анализ нескольких объектов как портфеля.",
+    "addProperty": "Добавить объект",
+    "removeProperty": "Удалить",
+    "emptyPortfolio": "Нет объектов в портфеле",
+    "totals": {
+      "title": "Итого по портфелю",
+      "totalValue": "Общая стоимость",
+      "totalRent": "Общая аренда/мес",
+      "averageCapRate": "Средняя капитализация",
+      "totalCashFlow": "Общий денежный поток/мес"
+    }
+  },
+  "property": {
+    "card": {
+      "untitled": "Объект без названия",
+      "imagePlaceholder": "Фото объекта",
+      "priceOnRequest": "Цена по запросу",
+      "beds": "{count, plural, one {# комната} few {# комнаты} other {# комнат}}",
+      "baths": "{count, plural, one {# ванная} few {# ванные} other {# ванных}}",
+      "areaUnit": "м²",
+      "noLongerAvailable": "Объект больше недоступен",
+      "locationUnavailable": "Местоположение недоступно"
+    },
+    "favorite": {
+      "add": "Добавить в избранное",
+      "remove": "Удалить из избранного"
+    },
+    "details": {
+      "title": "Детали объекта",
+      "price": "Цена",
+      "area": "Площадь",
+      "rooms": "Комнаты",
+      "bathrooms": "Ванные",
+      "floor": "Этаж",
+      "totalFloors": "Этажность",
+      "yearBuilt": "Год постройки",
+      "propertyType": "Тип недвижимости",
+      "heating": "Отопление",
+      "parking": "Парковка",
+      "description": "Описание",
+      "location": "Местоположение",
+      "features": "Характеристики",
+      "contact": "Связаться с агентом"
+    }
+  },
+  "rentVsBuy": {
+    "title": "Калькулятор Аренда vs Покупка",
+    "description": "Сравните аренду и покупку во времени с анализом точки безубыточности.",
+    "emptyHint": "Введите данные об объекте и текущую аренду, чтобы увидеть сравнение.",
+    "analyzeButton": "Сравнить аренду с покупкой",
+    "error": {
+      "title": "Ошибка анализа",
+      "retry": "Повторить"
+    },
+    "form": {
+      "propertyRent": "Данные об объекте и аренде",
+      "propertyPrice": "Стоимость объекта ($)",
+      "monthlyRent": "Ежемесячная аренда ($)",
+      "advancedOptions": "Расширенные опции",
+      "showAdvanced": "Показать расширенные опции",
+      "hideAdvanced": "Скрыть расширенные опции",
+      "mortgageDetails": "Детали ипотеки",
+      "downPayment": "Первоначальный взнос (%)",
+      "interestRate": "Процентная ставка (%)",
+      "loanTerm": "Срок кредита (лет)",
+      "ownershipCosts": "Расходы на владение",
+      "annualPropertyTax": "Ежегодный налог на имущество ($)",
+      "annualInsurance": "Ежегодная страховка ($)",
+      "monthlyHoa": "Ежемесячный ТОС ($)",
+      "maintenancePercent": "Обслуживание (%)",
+      "appreciationRate": "Рост стоимости (%)",
+      "rentIncreaseRate": "Рост аренды (%)",
+      "investmentReturnRate": "Доходность инвестиций (%)",
+      "marginalTaxRate": "Предельная налоговая ставка (%)",
+      "projectionYears": "Период прогноза (лет)"
+    },
+    "results": {
+      "title": "Результаты анализа",
+      "description": "Комплексное сравнение аренды и покупки за {years} лет.",
+      "recommendation": "Рекомендация",
+      "breakEvenAt": "Точка безубыточности через {years} лет",
+      "buyingRecommended": "Рекомендуется покупка",
+      "rentingRecommended": "Рекомендуется аренда",
+      "dependsTimeline": "Зависит от ваших временных рамок",
+      "monthlyMortgage": "Ежемесячный платеж по ипотеке",
+      "monthlyRentInitial": "Ежемесячная аренда (начальная)",
+      "totalRentPaid": "Всего уплачено аренды",
+      "totalOwnershipCost": "Общая стоимость владения",
+      "netBuyingAdvantage": "Чистая выгода от покупки",
+      "equityBuilt": "Накопленный собственный капитал",
+      "advantageExplanation": "Положительно = покупка финансово выгоднее. Отрицательно = аренда лучше.",
+      "finalSummary": "Итоговое резюме",
+      "finalPropertyValue": "Конечная стоимость объекта",
+      "totalEquityBuilt": "Общий накопленный капитал",
+      "opportunityCost": "Альтернативные издержки",
+      "netAdvantage": "Чистая выгода",
+      "charts": {
+        "cumulativeCost": {
+          "title": "Сравнение совокупных затрат",
+          "ariaLabel": "График сравнения совокупных затрат, показывающий затраты на аренду и покупку во времени"
+        },
+        "equityGrowth": {
+          "title": "Рост собственного капитала и стоимости объекта",
+          "ariaLabel": "График роста собственного капитала и стоимости объекта во времени"
+        }
+      }
+    }
+  },
+  "savedSearches": {
+    "title": "Сохранённые поиски",
+    "description": "Ваши сохранённые поисковые запросы.",
+    "emptyState": {
+      "title": "Нет сохранённых поисков",
+      "description": "Сохраняйте поиски для уведомлений о новых объявлениях."
+    },
+    "run": "Выполнить поиск",
+    "delete": "Удалить",
+    "edit": "Редактировать",
+    "alerts": {
+      "enabled": "Уведомления включены",
+      "disabled": "Уведомления выключены",
+      "enable": "Включить уведомления",
+      "disable": "Выключить уведомления"
+    }
+  },
+  "search": {
+    "title": "Найдите свою недвижимость",
+    "description": "Поиск по тысячам объявлений с помощью семантического AI-поиска.",
+    "placeholder": "Опишите что вы ищете...",
+    "filters": {
+      "title": "Фильтры",
+      "sortBy": "Сортировать по",
+      "order": "Порядок",
+      "minPrice": "Мин. цена",
+      "maxPrice": "Макс. цена",
+      "minRooms": "Мин. комнат",
+      "propertyType": "Тип недвижимости",
+      "clearFilters": "Сбросить фильтры",
+      "applyFilters": "Применить"
+    },
+    "sortOptions": {
+      "relevance": "Релевантность",
+      "price": "Цена",
+      "pricePerSqm": "Цена за м²",
+      "area": "Площадь (м²)",
+      "yearBuilt": "Год постройки",
+      "dateAdded": "Дата добавления"
+    },
+    "orderOptions": {
+      "ascending": "По возрастанию",
+      "descending": "По убыванию"
+    },
+    "propertyTypes": {
+      "any": "Любой",
+      "apartment": "Квартира",
+      "house": "Дом",
+      "studio": "Студия",
+      "loft": "Лофт",
+      "townhouse": "Таунхаус",
+      "other": "Другое"
+    },
+    "emptyState": {
+      "title": "Начните поиск недвижимости",
+      "description": "Введите запрос для поиска тысяч объявлений.",
+      "tryExamples": "Попробуйте примеры:"
+    },
+    "results": {
+      "noResults": "Результаты не найдены",
+      "noResultsHint": "Попробуйте изменить условия поиска.",
+      "showingResults": "Найдено {count} {count, plural, one {объект} few {объекта} other {объектов}}",
+      "exportResults": "Экспорт результатов"
+    },
+    "export": {
+      "title": "Экспорт результатов",
+      "format": "Формат экспорта",
+      "csv": "CSV",
+      "json": "JSON",
+      "export": "Экспорт"
+    },
+    "saveSearch": {
+      "button": "Сохранить поиск",
+      "title": "Сохранить поиск",
+      "nameLabel": "Название поиска",
+      "namePlaceholder": "напр. 2-комнатные квартиры в Варшаве",
+      "success": "Поиск сохранён!",
+      "error": "Не удалось сохранить поиск"
+    },
+    "errors": {
+      "searchFailed": "Поиск не удался",
+      "connectionFailed": "Ошибка соединения. Попробуйте снова.",
+      "timeout": "Время поиска истекло. Попробуйте снова."
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "description": "Управление настройками аккаунта и предпочтениями.",
+    "tabs": {
+      "identity": "Профиль",
+      "notifications": "Уведомления",
+      "models": "Модели"
+    },
+    "identity": {
+      "title": "Профиль",
+      "description": "Установите email для привязки настроек к аккаунту.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Введите email",
+      "save": "Сохранить",
+      "saved": "Email сохранён.",
+      "cleared": "Email удалён.",
+      "invalidEmail": "Введите корректный email."
+    },
+    "notifications": {
+      "title": "Уведомления",
+      "description": "Настройте способ получения уведомлений.",
+      "emailNotifications": "Email уведомления",
+      "pushNotifications": "Push-уведомления",
+      "savedSearchAlerts": "Уведомления о поиске",
+      "priceDropAlerts": "Уведомления о снижении цен",
+      "newListingAlerts": "Уведомления о новых объявлениях"
+    },
+    "models": {
+      "title": "Модели",
+      "description": "Выберите модель по умолчанию и сравните цены.",
+      "defaultModel": "Модель по умолчанию",
+      "refreshCatalog": "Обновить каталог",
+      "runtimeCheck": "Проверка runtime",
+      "testConnection": "Тест соединения",
+      "connectionSuccess": "Соединение успешно",
+      "connectionFailed": "Ошибка соединения",
+      "noModels": "Нет доступных моделей",
+      "pricing": {
+        "title": "Цены моделей",
+        "input": "Ввод",
+        "output": "Вывод",
+        "per1kTokens": "за 1K токенов"
+      }
+    },
+    "saved": "Настройки сохранены.",
+    "error": "Не удалось сохранить настройки."
+  },
+  "tools": {
+    "title": "Инструменты",
+    "description": "Полезные калькуляторы и утилиты для недвижимости.",
+    "mortgageCalculator": "Ипотечный калькулятор",
+    "investmentAnalyzer": "Анализ инвестиций",
+    "affordabilityCalculator": "Калькулятор доступности",
+    "comparisonTool": "Сравнение объектов"
+  },
+  "validation": {
+    "required": "Это поле обязательно",
+    "email": "Введите корректный email",
+    "minLength": "Минимум {min} символов",
+    "maxLength": "Максимум {max} символов",
+    "min": "Минимальное значение {min}",
+    "max": "Максимальное значение {max}",
+    "pattern": "Неверный формат"
+  }
+}

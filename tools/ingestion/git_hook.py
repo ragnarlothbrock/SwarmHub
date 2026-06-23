@@ -4,9 +4,7 @@ import subprocess
 import json
 import re
 import shutil
-import urllib.request
 
-# Ensure workspace paths are visible for relative tooling cross-imports
 sys.path.insert(0, os.getcwd())
 from tools.ingestion.crawler import BulkRegistryCrawler
 from tools.ingestion.classifier import LlamaMetadataClassifier
@@ -35,6 +33,9 @@ class LiveRepositoryHook:
                 shutil.rmtree(self.cache_dir)
                 self._execute_fresh_clone()
         else:
+            if os.path.exists(self.cache_dir):
+                print("⚠️  Cache folder exists but lacks Git memory tracking. Wiping directory to prevent clone collision...")
+                shutil.rmtree(self.cache_dir)
             self._execute_fresh_clone()
 
     def _execute_fresh_clone(self) -> None:
@@ -68,8 +69,8 @@ class LiveRepositoryHook:
                 continue
 
             display_name = re.sub(r'[^\w\s\-]', '', cells[0]).strip()
-            industry = cells[1] if len(cells) > 1 else "Generic"
-            description = cells[2] if len(cells) > 2 else "No description available."
+            industry = cells[1] if len(cells) > 1 else "Research & Development"
+            description = cells[2] if len(cells) > 2 else "Agentic Workflow Blueprint Portfolio Asset."
             
             raw_parentheses_contents = re.findall(r'\(([^)]+)\)', clean_line)
             valid_links = [
@@ -99,8 +100,6 @@ class LiveRepositoryHook:
         if "github.com" not in url:
             return url, ""
             
-        # Regex to catch root repos vs deep nested subdirectory trees or blobs
-        # e.g., https://github.com/user/repo/tree/main/subfolder/target
         match = re.match(r'(https://github\.com/[^/]+/[^/]+)(/(tree|blob)/[^/]+/(.*))?', url)
         if match:
             base_repo = match.group(1)
@@ -117,6 +116,15 @@ class LiveRepositoryHook:
 
         self._sync_remote_repository()
         print("\n" + "-" * 95 + "\n")
+
+        existing_records = []
+        if os.path.exists(self.master_catalog_path):
+            try:
+                with open(self.master_catalog_path, "r", encoding="utf-8") as f:
+                    existing_records = json.load(f)
+                print(f"📦 Found {len(existing_records)} pre-existing agent profiles in index. Securing boundaries...")
+            except Exception:
+                existing_records = []
 
         # PASS 1: Sweep the native physical directories inside agents/
         crawler = BulkRegistryCrawler(target_repo_root=self.cache_dir)
@@ -137,69 +145,88 @@ class LiveRepositoryHook:
             with open(self.master_catalog_path, "r", encoding="utf-8") as f:
                 catalog_index_records = json.load(f)
 
-        temp_clone_path = "dist/cache/temp_ingestion_target"
+        for ex_rec in existing_records:
+            if not any(item.get("registry_handle") == ex_rec.get("registry_handle") for item in catalog_index_records):
+                catalog_index_records.append(ex_rec)
         
         for index, record in enumerate(table_records, start=1):
+            if not record["name"].strip():
+                continue
+                
             clean_slug = record["name"].lower().replace(" ", "-").replace("_", "-")
-            
-            # Skip anchor tags or broken strings early
             if "#" in record["url"] or "CONTRIBUTION" in record["url"] or record["url"].endswith("agents/"):
                 continue
 
-            print(f"🛰️  [Cloud Ingestion Batch {index}/{len(table_records)}] -> Indexing: {record['name']}")
+            print(f"🛰  [Cloud Ingestion Batch {index}/{len(table_records)}] -> Indexing: {record['name']}")
             
             if any(item.get("registry_handle", "").endswith(clean_slug) for item in catalog_index_records):
-                print(f"   ⏭️  Asset '{clean_slug}' already exists in index. Skipping safely.\n")
+                print(f"    skip  Asset '{clean_slug}' already exists in index. Skipping safely.\n")
                 continue
 
             try:
                 active_scan_path = ""
-                
-                # Check for internal relative paths that are already cached locally
                 if record["url"].startswith("https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/"):
                     relative_path = record["url"].split("/tree/main/")[-1].replace("%20", " ")
                     active_scan_path = os.path.join(self.cache_dir, relative_path)
                 else:
-                    # Decompose deep external paths into base repos and subpaths
                     base_repo, subpath = self._decompose_github_url(record["url"])
-                    
                     if not base_repo.startswith("http") or "github.io" in base_repo:
-                        print(f"   ℹ️  Skipping raw web page index documentation link: {record['url']}\n")
+                        print(f"    info  Skipping raw web page index documentation link: {record['url']}\n")
                         continue
 
-                    if os.path.exists(temp_clone_path):
-                        shutil.rmtree(temp_clone_path)
+                    # ROUTE TO A PERMANENT CACHE PATH FOR EXTERNAL PROJECTS
+                    external_repo_cache = os.path.join("dist", "cache", "external", clean_slug)
                     
-                    print(f"   📥 Cloning root repo coordinate: {base_repo}")
-                    subprocess.run(
-                        ["git", "clone", "--depth", "1", base_repo, temp_clone_path],
-                        check=True, capture_output=True, timeout=25, text=True
-                    )
+                    if not os.path.exists(os.path.join(external_repo_cache, ".git")):
+                        if os.path.exists(external_repo_cache):
+                            shutil.rmtree(external_repo_cache)
+                        print(f"    📥 Cloning root repo coordinate to permanent cache: {base_repo}")
+                        subprocess.run(
+                            ["git", "clone", "--depth", "1", base_repo, external_repo_cache],
+                            check=True, capture_output=True, timeout=45, text=True
+                        )
+                    else:
+                        print(f"    🔄 External asset folder cache hit. Syncing upstream...")
+                        subprocess.run(["git", "-C", external_repo_cache, "pull"], capture_output=True)
                     
-                    # Direct the focus path down to the internal folder subpath
-                    active_scan_path = os.path.join(temp_clone_path, subpath) if subpath else temp_clone_path
+                    active_scan_path = os.path.join(external_repo_cache, subpath) if subpath else external_repo_cache
 
                 if not os.path.exists(active_scan_path):
-                    print(f"   ⚠️  Target subpath folder does not exist inside repository structure: {active_scan_path}\n")
+                    print(f"    ⚠️  Target subpath folder does not exist inside repository structure: {active_scan_path}\n")
                     continue
 
-                # Run Llama classification over the specific focused subpath code context
-                context_str = self.classifier._compile_folder_context(active_scan_path)
-                
+                if os.path.isdir(active_scan_path):
+                    context_str = self.classifier._compile_folder_context(active_scan_path)
+                else:
+                    try:
+                        with open(active_scan_path, "r", encoding="utf-8", errors="ignore") as f:
+                            context_str = f.read(6000)
+                    except Exception:
+                        context_str = ""
+
+                if not context_str.strip():
+                    print("    ⚠️  Skipping: Empty context code boundaries encountered.\n")
+                    continue
+
                 system_prompt = (
                     "You are an expert software architect acting as a metadata classifier for SwarmHub.\n"
                     "Analyze the provided codebase and return a valid JSON object matching this schema blueprint precisely.\n"
                     "Do NOT include conversational text, explanation markers, or markdown formatting.\n\n"
+                    "CRITICAL INSTRUCTIONS FOR SMALL MODELS:\n"
+                    "1. NEVER use literal guide words like 'string', 'Generic', or empty arrays.\n"
+                    "2. 'primary_task': Generate an explicit descriptive title summarizing the logic function (e.g., 'Autonomous Market Microstructure Analysis').\n"
+                    "3. 'original_framework': Extract the framework layer found (e.g., 'LangGraph', 'CrewAI', 'AutoGen', 'Vanilla Python').\n"
+                    "4. 'complexity_tier': Evaluate depth and return exactly one: 'Beginner', 'Intermediate', or 'Advanced'.\n\n"
                     "EXPECTED JSON FORMAT ONLY:\n"
                     "{\n"
-                    '  "display_name": "string",\n'
+                    f'  "display_name": "{record["name"]}",\n'
                     '  "filters": {\n'
                     f'    "industry": "{record["industry"]}",\n'
-                    '    "primary_task": "string",\n'
-                    '    "original_framework": "string",\n'
-                    '    "complexity_tier": "string",\n'
-                    '    "required_mcp_interfaces": ["string"],\n'
-                    '    "suggested_llm_baseline": "string"\n'
+                    '    "primary_task": "A precise multi-word summary of the actual logic execution function",\n'
+                    '    "original_framework": "Vanilla Python",\n'
+                    '    "complexity_tier": "Intermediate",\n'
+                    '    "required_mcp_interfaces": ["web_browser_stdio"],\n'
+                    '    "suggested_llm_baseline": "Llama-3.2-3b"\n'
                     "  }\n"
                     "}"
                 )
@@ -224,14 +251,11 @@ class LiveRepositoryHook:
                 with open(self.master_catalog_path, "w", encoding="utf-8") as out_f:
                     json.dump(catalog_index_records, out_f, indent=4)
                     
-                print(f"   ✅ Successfully cataloged cloud asset subpath!\n")
+                print(f"    ✅ Successfully cataloged cloud asset subpath!\n")
 
             except Exception as e:
-                print(f"   ❌ Failed processing external link: {e}\n")
+                print(f"    ❌ Failed processing external link: {e}\n")
                 continue
-
-        if os.path.exists(temp_clone_path):
-            shutil.rmtree(temp_clone_path)
 
         print("=" * 95)
         print("🏁 Global Ingestion and Cloud Mapping Finished Successfully!")

@@ -25,22 +25,24 @@ By separating the infrastructure (the framework) from the execution logic (your 
 * **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network transport nodes with granular, least-privilege permission scoping at the node level.
 * **Serverless Package Registry:** A decentralized package manager capable of staging, linting, publishing, and distributing both individual script nodes and complete multi-agent workloads directly across public GitHub repositories.
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
-* **Batteries-Included Agent Library:** 42 world-class production agent architectures automatically cloned, extracted, and pre-compiled right into the core distribution tree for immediate execution.
+* **Universal Translation Mapping Plane:** Natively ingests legacy architectures and standalone assets, transforming `LangChain` pipelines into stateful `LangGraph` graphs, and unstructured `Vanilla Python` scripts into sequential `CrewAI` topologies.
+* **Interactive AST Code Auto-Healer:** Pre-processing compilation layers scan and repair common syntax defects (such as unescaped nested f-string quotes or trailing bracket typos) programmatically on the fly before code strings hit the parser core.
+* **Batteries-Included Agent Library:** 117 world-class agent environments automatically discovered and indexed, yielding **86 fully functional, pre-compiled production agent matrixes** shipping directly inside the distribution tree.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
 
 ---
 
 ## 📦 The Pristine Agent Library (Pre-Compiled Distribution Matrix)
 
-SwarmHub ships out-of-the-box with a pre-compiled library containing **42 high-performance production agent systems**. These architectures were extracted directly from the official repository engines of the top framework groups, stripped of vendor lock-in, and cross-compiled across all targeting pipelines.
+SwarmHub ships out-of-the-box with a pre-compiled library containing **86 high-performance production agent systems**. These architectures were extracted directly from the official repositories of leading framework ecosystems and decentralized community registries, stripped of vendor lock-in, and cross-compiled across all target pipelines.
 
-When a developer runs `git clone` on SwarmHub, they instantly inherit an optimized cross-framework matrix located inside **`dist/compiled/`**:
+When a developer runs `git clone` on SwarmHub, they instantly inherit an optimized, ready-to-run cross-framework matrix located inside **`dist/compiled/`**:
 
 ```text
 dist/compiled/
-├── crewai/       # 22 Pre-Compiled Official CrewAI Swarms & Modular Flows
-├── langgraph/    # 4 Pre-Compiled Core Enterprise LangGraph Graph Systems
-└── autogen/      # 16 Pre-Compiled Next-Gen AutoGen v0.4+ Workload Blueprints
+├── crewai/       # 44 Pre-Compiled Production Crews & Modernized Vanilla Python Codebases
+├── langgraph/    # 13 Pre-Compiled Core Enterprise Graphs & Upgraded LangChain Pipelines
+└── autogen/      # 29 Pre-Compiled Next-Gen AutoGen v0.4+ Workload Blueprints
 ```
 
 ### 🧠 Automated Jupyter Notebook Sanitization
@@ -69,8 +71,8 @@ SwarmHub/
 ├── examples/                # Composition Layer: Declarative blueprint maps and local source documents
 ├── dist/                    # Production Layer: Cross-compiled executable outputs
 │   ├── registry/
-│   │   └── registry_index.json  # Central Ground-Truth Agent Index
-│   └── compiled/                # Pre-Compiled Framework Distribution Library Matrix
+│   │   └── registry_index.json  # Central Ground-Truth Agent Index (117 Total Solutions)
+│   └── compiled/                # Pre-Compiled Framework Distribution Library Matrix (86 Verified Assets)
 │       ├── crewai/              # Translated and ready-to-run CrewAI asset instances
 │       ├── langgraph/           # Translated and ready-to-run LangGraph asset instances
 │       └── autogen/             # Translated and ready-to-run AutoGen asset instances

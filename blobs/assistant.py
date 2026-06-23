@@ -1,3 +1,2 @@
 def run(state):
-    print('    💬 Conversable agent runtime node executing: Assistant')
-    return state
+   return {"messages": [llm_with_tools.invoke([sys_msg] + state["messages"])]}

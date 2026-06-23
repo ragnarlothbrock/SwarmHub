@@ -1,5 +1,325 @@
 [
     {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/01-web-research-agent",
+        "display_name": "Web Research Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/01-web-research-agent",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Web Scraping & Synthesis",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/02-code-review-agent",
+        "display_name": "Code Review Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/02-code-review-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Code Review and Suggestion",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/03-pdf-qa-agent",
+        "display_name": "PDF Q&A Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/03-pdf-qa-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Research paper analysis and Contract review",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "file_server_stdio",
+                "financial_market_service"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/04-sql-query-agent",
+        "display_name": "SQL Query Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/04-sql-query-agent",
+        "filters": {
+            "industry": "E-commerce",
+            "primary_task": "Web Scraping & Synthesis",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/05-email-drafting-agent",
+        "display_name": "Email Drafting Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/05-email-drafting-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Web Scraping & Synthesis",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/06-news-summarizer-agent",
+        "display_name": "News Summarizer Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/06-news-summarizer-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Web Scraping & Synthesis",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/07-github-issue-triager",
+        "display_name": "GitHub Issue Triager",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/07-github-issue-triager",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Automatically triages GitHub issues",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/08-data-analysis-agent",
+        "display_name": "Data Analysis Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/08-data-analysis-agent",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Data Analysis",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/09-resume-parser-agent",
+        "display_name": "Resume Parser Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/09-resume-parser-agent",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Resume Parsing & Fit Scoring",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/10-meeting-notes-agent",
+        "display_name": "Meeting Notes Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/10-meeting-notes-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Converts meeting transcripts into structured notes",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/11-stock-research-agent",
+        "display_name": "Stock Research Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/11-stock-research-agent",
+        "filters": {
+            "industry": "Finance",
+            "primary_task": "Real-time stock data fetching and AI-powered investment analysis",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/12-travel-planner-agent",
+        "display_name": "Travel Planner Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/12-travel-planner-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Personalized Travel Itinerary Creation",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/13-customer-support-agent",
+        "display_name": "Customer Support Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/13-customer-support-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Web-based Customer Support with RAG Knowledge Base and Escalation Routing",
+            "original_framework": "LangGraph + FAISS",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/14-social-media-agent",
+        "display_name": "Social Media Content Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/14-social-media-agent",
+        "filters": {
+            "industry": "E-commerce",
+            "primary_task": "Generate platform-optimized social media content from any topic",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/15-unit-test-generator",
+        "display_name": "Unit Test Generator Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/15-unit-test-generator",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Code Analysis and Generation",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/16-documentation-writer",
+        "display_name": "Documentation Writer Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/16-documentation-writer",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Generate comprehensive documentation for Python modules",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/17-recipe-agent",
+        "display_name": "Recipe Recommendation Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/17-recipe-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Recipe Suggestion and Display",
+            "original_framework": "LangChain",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/18-job-application-agent",
+        "display_name": "Job Application Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/18-job-application-agent",
+        "filters": {
+            "industry": "Customer Support",
+            "primary_task": "Web Scraping & Synthesis",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o-mini"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/19-competitive-analysis-agent",
+        "display_name": "Competitive Analysis Agent",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/19-competitive-analysis-agent",
+        "filters": {
+            "industry": "productivity and collaboration software",
+            "primary_task": "Competitive Landscape Analysis",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/20-multi-agent-debate",
+        "display_name": "Multi-Agent Debate System",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/dist/cache/500-agents/agents/20-multi-agent-debate",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Two AI agents debate a topic from opposing sides, moderated by a judge who declares a winner and synthesizes the key arguments.",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio",
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "GPT-4o"
+        }
+    },
+    {
         "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-game-builder-crew",
         "display_name": "Conversational Matrix Routing for Game Building",
         "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/game-builder-crew",
@@ -231,6 +551,96 @@
         "filters": {
             "industry": "Research & Development",
             "primary_task": "Plan the best trip based on weather, season, and prices",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-content-creator-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/content_creator_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Matrix-based routing for conversational flows",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-email-auto-responder-flow",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/email_auto_responder_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-lead-score-flow",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/lead-score-flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-meeting-assistant-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/meeting_assistant_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automate the process of managing meetings, including scheduling, note-taking, and follow-up actions.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-self-evaluation-loop-flow",
+        "display_name": "Conversational Matrix Routing",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/self_evaluation_loop_flow",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Automated Self-Evaluation Loop",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-write-a-book-with-flows",
+        "display_name": "Automating Tasks with CrewAI",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/write_a_book_with_flows",
+        "filters": {
+            "industry": "Research & Development",
+            "primary_task": "Conversational Matrix Routing",
             "original_framework": "CrewAI",
             "complexity_tier": "Intermediate",
             "required_mcp_interfaces": [
@@ -600,96 +1010,6 @@
         }
     },
     {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-content-creator-flow",
-        "display_name": "Conversational Matrix Routing",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/content_creator_flow",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Matrix-based routing for conversational flows",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-email-auto-responder-flow",
-        "display_name": "Automating Tasks with CrewAI",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/email_auto_responder_flow",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Conversational Matrix Routing",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-lead-score-flow",
-        "display_name": "Automating Tasks with CrewAI",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/lead-score-flow",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Conversational Matrix Routing",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-meeting-assistant-flow",
-        "display_name": "Conversational Matrix Routing",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/meeting_assistant_flow",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Automate the process of managing meetings, including scheduling, note-taking, and follow-up actions.",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-self-evaluation-loop-flow",
-        "display_name": "Conversational Matrix Routing",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/self_evaluation_loop_flow",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Automated Self-Evaluation Loop",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
-        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai-write-a-book-with-flows",
-        "display_name": "Automating Tasks with CrewAI",
-        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/flows/write_a_book_with_flows",
-        "filters": {
-            "industry": "Research & Development",
-            "primary_task": "Conversational Matrix Routing",
-            "original_framework": "CrewAI",
-            "complexity_tier": "Intermediate",
-            "required_mcp_interfaces": [
-                "web_browser_stdio"
-            ],
-            "suggested_llm_baseline": "Llama-3.2-3b"
-        }
-    },
-    {
         "registry_handle": "martinkovacevic/SwarmHub-Registry/autogen-agentchat-azure-postgresql",
         "display_name": "Conversational Matrix Routing",
         "original_source_url": "https://github.com/microsoft/autogen/tree/main/python/samples/agentchat_azure_postgresql",
@@ -967,6 +1287,486 @@
             "industry": "Research & Development",
             "primary_task": "Conversational Matrix Routing",
             "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/learn-with-a-course",
+        "display_name": "Learn with a course",
+        "original_source_url": "https://github.com/ashishpatel26/500-AI-Agents-Projects/tree/main/crewai_mcp_course/",
+        "filters": {
+            "industry": "[`crewai_mcp_course/`](crewai_mcp_course/)",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/ai-health-assistant",
+        "display_name": "AI Health Assistant",
+        "original_source_url": "https://github.com/ahmadvh/AI-Agents-for-Medical-Diagnostics.git",
+        "filters": {
+            "industry": "Artificial Intelligence",
+            "primary_task": "Collaborative AI Reasoning",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/automated-trading-bot",
+        "display_name": "Automated Trading Bot",
+        "original_source_url": "https://github.com/MingyuJ666/Stockagent.git",
+        "filters": {
+            "industry": "Finance",
+            "primary_task": "Simulate real-world trading environments to investigate the impact of external factors on stock trading activities",
+            "original_framework": "StockAgent",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/agent-wallet-sdk",
+        "display_name": "Agent Wallet SDK",
+        "original_source_url": "https://github.com/up2itnow0822/agent-wallet-sdk",
+        "filters": {
+            "industry": "Finance",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/virtual-ai-tutor",
+        "display_name": "Virtual AI Tutor",
+        "original_source_url": "https://github.com/hqanhh/EduGPT.git",
+        "filters": {
+            "industry": "Education",
+            "primary_task": "AI Instructor using LLMs and Langchain",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/247-ai-chatbot",
+        "display_name": "247 AI Chatbot",
+        "original_source_url": "https://github.com/NirDiamant/GenAI_Agents/blob/main/all_agents_tutorials/customer_support_agent_langgraph.ipynb",
+        "filters": {
+            "industry": "Customer Service",
+            "primary_task": "Building an Intelligent Customer Support Agent with LangGraph",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/product-recommendation-agent",
+        "display_name": "Product Recommendation Agent",
+        "original_source_url": "https://github.com/microsoft/RecAI",
+        "filters": {
+            "industry": "Retail",
+            "primary_task": "Leveraging Large Language Models for Next-Generation Recommender Systems",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/self-driving-delivery-agent",
+        "display_name": "Self-Driving Delivery Agent",
+        "original_source_url": "https://github.com/sled-group/driVLMe",
+        "filters": {
+            "industry": "Transportation",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/factory-process-monitoring-agent",
+        "display_name": "Factory Process Monitoring Agent",
+        "original_source_url": "https://github.com/yuchenxia/llm4ias",
+        "filters": {
+            "industry": "Manufacturing",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/property-pricing-agent",
+        "display_name": "Property Pricing Agent",
+        "original_source_url": "https://github.com/AleksNeStu/ai-real-estate-assistant",
+        "filters": {
+            "industry": "Real Estate",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/smart-farming-assistant",
+        "display_name": "Smart Farming Assistant",
+        "original_source_url": "https://github.com/mohammed97ashraf/LLM_Agri_Bot",
+        "filters": {
+            "industry": "Agriculture",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/energy-demand-forecasting-agent",
+        "display_name": "Energy Demand Forecasting Agent",
+        "original_source_url": "https://github.com/yecchen/MIRAI",
+        "filters": {
+            "industry": "Energy",
+            "primary_task": "A precise multi-word summary of the actual logic execution function",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/content-personalization-agent",
+        "display_name": "Content Personalization Agent",
+        "original_source_url": "https://github.com/crosleythomas/MirrorGPT",
+        "filters": {
+            "industry": "Entertainment",
+            "primary_task": "Building a personalized agent that mirrors the user - facts about the user, speaking style, voice, and more.",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/legal-document-review-assistant",
+        "display_name": "Legal Document Review Assistant",
+        "original_source_url": "https://github.com/firica/legalai",
+        "filters": {
+            "industry": "Legal",
+            "primary_task": "A precise multi-word summary of the actual logic execution function",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/recruitment-recommendation-agent",
+        "display_name": "Recruitment Recommendation Agent",
+        "original_source_url": "https://github.com/sentient-engineering/jobber",
+        "filters": {
+            "industry": "Human Resources",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/virtual-travel-assistant",
+        "display_name": "Virtual Travel Assistant",
+        "original_source_url": "https://github.com/nirbar1985/ai-travel-agent",
+        "filters": {
+            "industry": "Hospitality",
+            "primary_task": "A smart travel agency tool to look up information and convert structured markdown-like text into a valid HTML email body",
+            "original_framework": "LangGraph",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/ai-game-companion-agent",
+        "display_name": "AI Game Companion Agent",
+        "original_source_url": "https://github.com/onjas-buidl/LLM-agent-game",
+        "filters": {
+            "industry": "Gaming",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/real-time-threat-detection-agent",
+        "display_name": "Real-Time Threat Detection Agent",
+        "original_source_url": "https://github.com/NVISOsecurity/cyber-security-llm-agents",
+        "filters": {
+            "industry": "Cybersecurity",
+            "primary_task": "Automating the analysis of cyber security threats in real-time using Large Language Models (LLMs)",
+            "original_framework": "AutoGen",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/e-commerce-personal-shopper-agent",
+        "display_name": "E-commerce Personal Shopper Agent",
+        "original_source_url": "https://github.com/Hoanganhvu123/ShoppingGPT",
+        "filters": {
+            "industry": "E-commerce",
+            "primary_task": "Agentic Automation Loop",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "file_server_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/logistics-optimization-agent",
+        "display_name": "Logistics Optimization Agent",
+        "original_source_url": "https://github.com/microsoft/OptiGuide",
+        "filters": {
+            "industry": "Supply Chain",
+            "primary_task": "GenAI for Decision Making and Optimization with What-if Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/vibe-hacking-agent",
+        "display_name": "Vibe Hacking Agent",
+        "original_source_url": "https://github.com/PurpleAILAB/Decepticon",
+        "filters": {
+            "industry": "Offensive Security",
+            "primary_task": "AI-Assisted Contribution Guidelines",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Advanced",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/citadel",
+        "display_name": "Citadel",
+        "original_source_url": "https://github.com/SethGammon/Citadel",
+        "filters": {
+            "industry": "Software Development",
+            "primary_task": "A precise multi-word summary of the actual logic execution function",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/medisuite-ai-agent",
+        "display_name": "MediSuite-AI-Agent",
+        "original_source_url": "https://github.com/ahmedmansour5/MediSuite-Ai-Agent",
+        "filters": {
+            "industry": "Health Insurance",
+            "primary_task": "A medical AI agent that helps automating the process of hospitals / insurance workflow ",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/lina-egyptian-medical-chatbot",
+        "display_name": "Lina Egyptian Medical Chatbot",
+        "original_source_url": "https://github.com/dina-khalid/Lina-Egyptian-Medical-Chatbot",
+        "filters": {
+            "industry": "Healthcare",
+            "primary_task": "A precise multi-word summary of the actual logic execution function",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/marketing-strategy-generator",
+        "display_name": "Marketing Strategy Generator",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/marketing_strategy",
+        "filters": {
+            "industry": "Marketing",
+            "primary_task": "Automating Marketing Strategy Generation with CrewAI",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/job-posting-generator",
+        "display_name": "Job Posting Generator",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/job-posting",
+        "filters": {
+            "industry": "Recruitment",
+            "primary_task": "Automate comprehensive job posting creation using autonomous AI agents, leveraging the CrewAI framework.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/recruitment-workflow",
+        "display_name": "Recruitment Workflow",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/recruitment",
+        "filters": {
+            "industry": "Recruitment",
+            "primary_task": "Automate Recruitment Process with CrewAI Framework",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/instagram-post-generator",
+        "display_name": "Instagram Post Generator",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/instagram_post",
+        "filters": {
+            "industry": "Social Media",
+            "primary_task": "Automate the process of coming up with an instagram post using autonomous AI agents, enabling them to collaborate and execute complex tasks efficiently.",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/stock-analysis-tool",
+        "display_name": "Stock Analysis Tool",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/stock_analysis",
+        "filters": {
+            "industry": "Finance",
+            "primary_task": "Automate the process of analyzing a stock using CrewAI framework and its agents to generate detailed reports",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/surprise-trip-planner",
+        "display_name": "Surprise Trip Planner",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/crews/surprise_trip",
+        "filters": {
+            "industry": "Travel",
+            "primary_task": "Automating the creation of surprise travel plans using CrewAI framework",
+            "original_framework": "CrewAI",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/nvidia-models-integration",
+        "display_name": "NVIDIA Models Integration",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/integrations/nvidia_models",
+        "filters": {
+            "industry": "AI Integration",
+            "primary_task": "Autonomous Market Microstructure Analysis",
+            "original_framework": "Vanilla Python",
+            "complexity_tier": "Intermediate",
+            "required_mcp_interfaces": [
+                "web_browser_stdio"
+            ],
+            "suggested_llm_baseline": "Llama-3.2-3b"
+        }
+    },
+    {
+        "registry_handle": "martinkovacevic/SwarmHub-Registry/crewai--langgraph-integration",
+        "display_name": "CrewAI  LangGraph Integration",
+        "original_source_url": "https://github.com/crewAIInc/crewAI-examples/tree/main/integrations/CrewAI-LangGraph",
+        "filters": {
+            "industry": "AI Integration",
+            "primary_task": "Automate the process of automatically checking emails and creating drafts using CrewAI with LangChain and LangGraph",
+            "original_framework": "Vanilla Python",
             "complexity_tier": "Intermediate",
             "required_mcp_interfaces": [
                 "web_browser_stdio"

@@ -1,0 +1,565 @@
+name: CI/CD AI Real Estate Assistant
+
+permissions:
+  contents: read
+  pull-requests: read
+
+on:
+  push:
+    branches: [main, dev]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+  pull_request:
+    branches: [main, dev]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.gitignore'
+      - 'LICENSE'
+  workflow_dispatch:
+    inputs:
+      enable_deep_analysis:
+        description: 'Enable Stage 4 deep analysis (CodeQL, Trivy, Lighthouse, E2E)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ci-${{ github.ref }}-${{ github.actor }}
+  cancel-in-progress: ${{ github.actor != 'dependabot[bot]' }}
+
+# Condition: skip Stage 4 on Dependabot PRs (dependency-only changes)
+# Condition: Stage 4 on dev/main pushes or manual dispatch
+jobs:
+  # ===== STAGE 1: Quick Checks =====
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Gitleaks scan
+        uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_CONFIG: .gitleaks.toml
+
+  secret-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for placeholder secrets in deploy configs
+        run: |
+          echo "Checking for placeholder secrets in deploy configuration..."
+
+          PATTERNS=(
+            "your-generated-api-key-here"
+            "your-jwt-secret-key-here"
+            "change-me"
+            "changeme"
+          )
+
+          EXIT_CODE=0
+
+          for pattern in "${PATTERNS[@]}"; do
+            if grep -r "$pattern" deploy/ 2>/dev/null; then
+              echo "::error::Found placeholder '$pattern' in deploy config"
+              EXIT_CODE=1
+            fi
+          done
+
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "No placeholder secrets found in deploy configs"
+          fi
+
+          exit $EXIT_CODE
+
+  backend-lint:
+    runs-on: ubuntu-latest
+    needs: [gitleaks, secret-validation]
+    defaults:
+      run:
+        working-directory: apps/api
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+        with:
+          working-directory: apps/api
+          install-extras: 'pytest ruff'
+
+      - name: Lint (ruff)
+        run: |
+          python -m ruff check .
+
+  # ===== STAGE 2: Backend Tests (Parallel Matrix) =====
+
+  backend-tests:
+    runs-on: ubuntu-latest
+    needs: [backend-lint]
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        test-suite:
+          - name: unit
+            path: tests/unit
+            coverage-min: 85
+          - name: integration
+            path: tests/integration
+            coverage-min: 70
+
+    defaults:
+      run:
+        working-directory: apps/api
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+        with:
+          working-directory: apps/api
+          install-extras: 'pytest pytest-asyncio pytest-cov pytest-xdist pytest-timeout ruff httpx types-requests'
+
+      - name: Run ${{ matrix.test-suite.name }} tests
+        run: |
+          python -m pytest ${{ matrix.test-suite.path }} \
+            -n auto --dist=worksteal \
+            --cov=. \
+            --cov-report=xml \
+            --cov-report=term-missing:skip-covered \
+            --timeout=${{ matrix.test-suite.name == 'integration' && '120' || '60' }} \
+            --tb=short \
+            -v
+
+      - name: Check coverage threshold
+        if: success()
+        run: |
+          COVERAGE=$(python -c "import xml.etree.ElementTree as ET; print(float(ET.parse('coverage.xml').getroot().attrib['line-rate']) * 100)")
+          echo "Coverage: ${COVERAGE}%"
+          THRESHOLD=${{ matrix.test-suite.coverage-min }}
+          python -c "import sys; sys.exit(0 if float('${COVERAGE}') >= ${THRESHOLD} else 1)" || echo "::error::Coverage ${COVERAGE}% below threshold ${THRESHOLD}%"
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-${{ matrix.test-suite.name }}
+          path: apps/api/coverage.xml
+
+  frontend-build:
+    runs-on: ubuntu-latest
+    needs: [gitleaks, secret-validation]
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+  security-sast:
+    runs-on: ubuntu-latest
+    needs: [backend-lint]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install security tools
+        uses: ./.github/actions/setup-python
+        with:
+          working-directory: apps/api
+          install-extras: 'bandit'
+
+      - name: Run Bandit (exclude tests, fail on high severity)
+        continue-on-error: true
+        run: |
+          mkdir -p artifacts
+          python -m bandit -r apps/api -x tests,node_modules,.history,venv,venv/*,.venv,.venv/*,.venv_ci,.venv_ci/* --severity-level high --confidence-level high -f json -o artifacts/bandit.json
+
+      - name: Upload bandit report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: bandit-report
+          path: artifacts/bandit.json
+
+  # ===== STAGE 3: Quality Checks =====
+
+  frontend-tests:
+    runs-on: ubuntu-latest
+    needs: [frontend-build]
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: npm audit (block on high/critical)
+        run: npm audit --audit-level=high --omit=dev
+        continue-on-error: true
+
+      - name: Run tests
+        run: npm run test:ci
+
+      - name: Frontend coverage summary
+        run: |
+          node -e 'const fs=require("fs"); const summary=JSON.parse(fs.readFileSync("coverage/coverage-summary.json","utf8")); const total=summary.total; const text=["### Frontend Coverage","","Lines: "+total.lines.pct+"%","Statements: "+total.statements.pct+"%","Functions: "+total.functions.pct+"%","Branches: "+total.branches.pct+"%",""].join("\n"); fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, text);'
+
+      - name: Upload frontend coverage
+        uses: actions/upload-artifact@v7
+        with:
+          name: frontend-coverage
+          path: apps/web/coverage
+
+  security-deps:
+    runs-on: ubuntu-latest
+    needs: [backend-tests]
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install pip-audit
+        uses: ./.github/actions/setup-python
+        with:
+          working-directory: apps/api
+          install-extras: 'pip-audit'
+
+      - name: Run pip-audit (fail on vulnerabilities)
+        continue-on-error: true
+        run: |
+          mkdir -p ../../artifacts
+          python -m pip_audit -r requirements.txt -f json -o ../../artifacts/pip-audit.json
+
+      - name: Upload pip-audit report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: pip-audit-report
+          path: artifacts/pip-audit.json
+
+  # ===== STAGE 4: Deep Analysis (main/dev or manual, skip Dependabot) =====
+
+  codeql-python:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.enable_deep_analysis == 'true')) }}
+    needs: [security-deps]
+    timeout-minutes: 30
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: python
+          build-mode: none
+          queries: security-extended
+          config-file: ./.github/codeql/codeql-config.yml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:python'
+          upload: true
+        continue-on-error: true
+
+  codeql-javascript:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.enable_deep_analysis == 'true')) }}
+    needs: [security-deps]
+    timeout-minutes: 30
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          queries: security-extended
+          config-file: ./.github/codeql/codeql-config.yml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: '/language:javascript-typescript'
+          upload: true
+        continue-on-error: true
+
+  container-scan:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.enable_deep_analysis == 'true')) }}
+    needs: [frontend-build]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build backend image
+        run: |
+          docker build -f deploy/docker/Dockerfile.backend -t ai-backend:ci .
+
+      - name: Build frontend image
+        run: |
+          docker build -f deploy/docker/Dockerfile.frontend -t ai-frontend:ci .
+
+      - name: Trivy scan (backend)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ai-backend:ci
+          format: table
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Trivy scan (frontend)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: ai-frontend:ci
+          format: table
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+  lighthouse:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.enable_deep_analysis == 'true')) }}
+    needs: [frontend-tests]
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Next.js
+        run: npm run build
+        env:
+          LHCI_AUTH_BYPASS: 'true'
+          NEXT_PUBLIC_API_URL: /api/v1
+
+      - name: Run Lighthouse CI
+        run: npx lhci autorun
+        env:
+          LHCI_AUTH_BYPASS: 'true'
+
+      - name: Upload Lighthouse results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-results
+          path: apps/web/.lighthouseci
+
+      - name: Lighthouse summary
+        if: always()
+        run: |
+          echo "### Lighthouse CI Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -d .lighthouseci ]; then
+            ls -1 .lighthouseci/*.html 2>/dev/null | while read f; do
+              echo "- Report: $(basename "$f")" >> $GITHUB_STEP_SUMMARY
+            done
+          fi
+
+  e2e:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || (github.event_name == 'workflow_dispatch' && inputs.enable_deep_analysis == 'true')) }}
+    needs: [frontend-build]
+    timeout-minutes: 25
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node (root)
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: apps/web
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: apps/web
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: /api/v1
+
+      - name: Start frontend server
+        run: |
+          cd apps/web && npx next start -p 3000 &
+          npx wait-on http://localhost:3000 --timeout 60000
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        continue-on-error: true
+        env:
+          CI: 'true'
+          PLAYWRIGHT_START_WEB: 'false'
+        run: npx playwright test
+
+      - name: Upload E2E report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-report
+          path: artifacts/e2e-report/
+
+      - name: Upload E2E output (screenshots/traces)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-output
+          path: artifacts/e2e-output/
+
+      - name: E2E summary
+        if: always()
+        run: |
+          echo "### E2E Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f artifacts/e2e-report/results.json ]; then
+            PASSED=$(python3 -c "import json; d=json.load(open('artifacts/e2e-report/results.json')); print(d.get('stats',{}).get('passed',0))")
+            FAILED=$(python3 -c "import json; d=json.load(open('artifacts/e2e-report/results.json')); print(d.get('stats',{}).get('failed',0))")
+            TOTAL=$(python3 -c "import json; d=json.load(open('artifacts/e2e-report/results.json')); print(d.get('stats',{}).get('total',0))")
+            echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+            echo "| Total | $TOTAL |" >> $GITHUB_STEP_SUMMARY
+            echo "| Passed | $PASSED |" >> $GITHUB_STEP_SUMMARY
+            echo "| Failed | $FAILED |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No results.json found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ===== STAGE 5: Integration =====
+
+  compose_smoke:
+    runs-on: ubuntu-latest
+    needs: [backend-tests, frontend-build]
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Docker Compose smoke test (build + health checks)
+        continue-on-error: true
+        env:
+          API_ACCESS_KEY: ci-test-key
+        run: |
+          docker --version
+          docker compose version
+          set -e
+          for attempt in 1 2; do
+            python scripts/docker/compose_smoke.py --ci --timeout-seconds 600 && break
+            if [ $attempt -eq 2 ]; then exit 1; fi
+            echo "Compose smoke failed. Retrying..."
+          done
+
+  pipeline-health:
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [gitleaks, secret-validation, backend-lint, backend-tests,
+            frontend-build, security-sast, frontend-tests,
+            security-deps, codeql-python, codeql-javascript, container-scan,
+            lighthouse, e2e, compose_smoke]
+    permissions:
+      contents: read
+    steps:
+      - name: Summarize pipeline health
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const needs = ${{ toJson(needs) }};
+            const rows = Object.entries(needs).map(([job, data]) => [job, (data && data.result) || 'unknown']);
+            core.summary.addHeading('Pipeline Health');
+            core.summary.addTable([['Job', 'Result'], ...rows]);
+            const failures = rows.filter(([, result]) => result === 'failure');
+            const skipped = rows.filter(([, result]) => result === 'skipped');
+            const failureList = failures.map(([job, result]) => job + '(' + result + ')').join(', ');
+            const skippedList = skipped.map(([job, result]) => job + '(' + result + ')').join(', ');
+
+            if (failures.length) {
+              core.summary.addRaw('Failed jobs: ' + failureList);
+            }
+            if (skipped.length) {
+              core.summary.addRaw('\nSkipped jobs (expected on non-release branches): ' + skippedList);
+            }
+            if (!failures.length && !skipped.length) {
+              core.summary.addRaw('All pipeline jobs succeeded.');
+            }
+            if (failures.length) {
+              core.setFailed('Failed jobs: ' + failureList);
+            }
+
+            await core.summary.write();
