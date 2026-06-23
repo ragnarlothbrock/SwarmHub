@@ -25,11 +25,61 @@ By separating the infrastructure (the framework) from the execution logic (your 
 * **Model Context Protocol (MCP) Integration:** Connect your agent workforce to unified external capability servers running over local `stdio` sub-processes or remote network transport nodes with granular, least-privilege permission scoping at the node level.
 * **Serverless Package Registry:** A decentralized package manager capable of staging, linting, publishing, and distributing both individual script nodes and complete multi-agent workloads directly across public GitHub repositories.
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
+* **Batteries-Included Agent Library:** 42 world-class production agent architectures automatically cloned, extracted, and pre-compiled right into the core distribution tree for immediate execution.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
 
 ---
 
-## 📦 The Hub of Blobs: Serverless Architecture Registry
+## 📦 The Pristine Agent Library (Pre-Compiled Distribution Matrix)
+
+SwarmHub ships out-of-the-box with a pre-compiled library containing **42 high-performance production agent systems**. These architectures were extracted directly from the official repository engines of the top framework groups, stripped of vendor lock-in, and cross-compiled across all targeting pipelines.
+
+When a developer runs `git clone` on SwarmHub, they instantly inherit an optimized cross-framework matrix located inside **`dist/compiled/`**:
+
+```text
+dist/compiled/
+├── crewai/       # 22 Pre-Compiled Official CrewAI Swarms & Modular Flows
+├── langgraph/    # 4 Pre-Compiled Core Enterprise LangGraph Graph Systems
+└── autogen/      # 16 Pre-Compiled Next-Gen AutoGen v0.4+ Workload Blueprints
+```
+
+### 🧠 Automated Jupyter Notebook Sanitization
+The core framework examples provided by industry maintainers live almost exclusively inside heavily polluted Jupyter Notebooks (`.ipynb`). To prevent Abstract Syntax Tree (AST) compilation crashes, SwarmHub's mass ingestion pre-processors surgically extract code lines and strip out terminal environment pollutions on the fly:
+* Identifies and parses nested JSON notebook cell array metadata structures.
+* Filters out shell script updating commands (`!pip install`, `!pip3`).
+* Wipes out interactive notebook magic operators (`%pip`, `%conda`).
+* Validates and cleans the output stream, leaving a pure Python code block ready to hit our AST translation nodes.
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+SwarmHub/
+├── swarmhub/
+│   ├── core/
+│   │   ├── spec.py          # Universal Agent Specification Schema Contracts
+│   │   ├── builder.py       # Developer-facing Fluent Memory/MCP SDK Generator
+│   │   ├── linker.py        # Graph mutation, interface collision, and link-editing
+│   │   └── registry.py      # Package registry manager, validation linters, and download clients
+│   ├── parsers/             # AST-driven memory, tool, and sequence reverse-engineers
+│   └── emitters/            # Framework-specific native code compilers & checkpointers
+├── blobs/                   # Cognitive Layer: Framework-agnostic isolated code modules
+├── tools/                   # Capability Layer: External tools and background MCP service daemons
+├── examples/                # Composition Layer: Declarative blueprint maps and local source documents
+├── dist/                    # Production Layer: Cross-compiled executable outputs
+│   ├── registry/
+│   │   └── registry_index.json  # Central Ground-Truth Agent Index
+│   └── compiled/                # Pre-Compiled Framework Distribution Library Matrix
+│       ├── crewai/              # Translated and ready-to-run CrewAI asset instances
+│       ├── langgraph/           # Translated and ready-to-run LangGraph asset instances
+│       └── autogen/             # Translated and ready-to-run AutoGen asset instances
+└── tests/                   # Verification Layer: Automated cross-framework validation test suite
+```
+
+---
+
+## 🌐 The Hub of Blobs: Serverless Architecture Registry
 
 SwarmHub features a decentralized package manager that turns GitHub into a serverless distribution network. There are no centralized registry servers or hosting fees. Workflows, bricks, and agents are hosted transparently inside public git repositories, validated automatically via Abstract Syntax Tree (AST) static analysis parsing layers on download.
 
@@ -65,28 +115,6 @@ swarmhub install ragnarlothbrock/SwarmHub-Registry/llm-cost-optimizer
 swarmhub install martinkovacevic/SwarmHub/advanced-corrective-rag
 ```
 When a workload is detected, SwarmHub matches the dependency registry keys, downloads the files over secure raw HTTPS channels, runs safety contract checks, and mirrors the paths perfectly into your local project root (`blobs/`, `tools/`, and `examples/`), ready for cross-compilation.
-
----
-
-## 🏗️ Project Architecture
-
-```text
-SwarmHub/
-├── swarmhub/
-│   ├── core/
-│   │   ├── spec.py          # Universal Agent Specification Schema Contracts
-│   │   ├── builder.py       # Developer-facing Fluent Memory/MCP SDK Generator
-│   │   ├── linker.py        # Graph mutation, interface collision, and link-editing
-│   │   └── registry.py      # Package registry manager, validation linters, and download clients
-│   ├── parsers/             # AST-driven memory and tool reverse-engineers
-│   ├── emitters/            # Framework-specific native code compilers & checkpointers
-│   └── cli.py               # Global Command Line interface console router
-├── blobs/                   # Cognitive Layer: Framework-agnostic isolated code modules (e.g., advanced_rag/)
-├── tools/                   # Capability Layer: External tools and background MCP service daemons
-├── examples/                # Composition Layer: Declarative blueprint maps and local source documents
-├── dist/                    # Production Layer: Cross-compiled target framework executable outputs
-└── tests/                   # Verification Layer: Automated cross-framework ring validation test suite
-```
 
 ---
 
