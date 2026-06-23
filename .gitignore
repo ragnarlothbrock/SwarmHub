@@ -33,3 +33,6 @@ dist/advanced_rag/*.db-journal
 # === Operating System Noise ===
 .DS_Store
 Thumbs.dbdist/cache/
+
+# === Dist Cache ===
+dist/cache/

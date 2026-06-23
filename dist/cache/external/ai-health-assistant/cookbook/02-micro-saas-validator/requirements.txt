@@ -1,2 +1,0 @@
-litellm>=1.0.0
-octochains>=0.1.0

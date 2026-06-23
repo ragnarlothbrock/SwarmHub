@@ -1,4 +1,0 @@
-{
-  "$schema": "https://raw.githubusercontent.com/IBM/audit-ci/main/npm-audit-resolver/src/schema.json",
-  "exceptions": {}
-}
