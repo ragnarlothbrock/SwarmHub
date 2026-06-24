@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: migrated-crew-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: crewai-screenplay-writer
 # TARGET RUNTIME: LangGraph (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 

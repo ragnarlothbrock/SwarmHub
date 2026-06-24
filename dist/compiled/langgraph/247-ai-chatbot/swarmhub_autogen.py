@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: imported-legacy-agent
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: 247-ai-chatbot
 # TARGET RUNTIME: Microsoft AutoGen (Memory Layer: in_memory | Thread: test_1)
 # ==========================================================================
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 # {
 #   "version": "agentic.io/v1alpha1",
 #   "kind": "UniversalAgent",
-#   "name": "imported-legacy-agent",
+#   "name": "247-ai-chatbot",
 #   "runtime": {
 #     "provider": "langgraph_extracted",
 #     "model": "extracted_model",

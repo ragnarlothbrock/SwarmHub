@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SWARM: imported-legacy-agent
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SWARM: 11-stock-research-agent
 # TARGET RUNTIME: CrewAI (Memory Layer: in_memory | Thread: swarmhub-recovered-thread)
 # ==========================================================================
 
@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 # {
 #   "version": "agentic.io/v1alpha1",
 #   "kind": "UniversalAgent",
-#   "name": "imported-legacy-agent",
+#   "name": "11-stock-research-agent",
 #   "runtime": {
 #     "provider": "langgraph_extracted",
 #     "model": "extracted_model",

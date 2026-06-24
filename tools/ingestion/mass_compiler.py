@@ -7,30 +7,38 @@ try:
     from swarmhub.parsers.crewai import CrewAIParser
     from swarmhub.parsers.langgraph import LangGraphParser
     from swarmhub.parsers.autogen import AutoGenParser
+    from swarmhub.parsers.pydanticai import PydanticAIParser
 
     from swarmhub.emitters.langgraph import LangGraphEmitter
     from swarmhub.emitters.crewai import CrewAIEmitter
     from swarmhub.emitters.autogen import AutoGenEmitter
+    from swarmhub.emitters.pydanticai import PydanticAIEmitter  # Added PydanticAI Emitter Connection
 except ImportError:
     # Safe structural stubs inside deployment space to maintain fallback parity
     class CrewAIParser:
-        def __init__(self, code): self.code = code
+        def __init__(self, code, agent_name=""): self.code = code
         def parse(self): return {"framework": "CrewAI", "source": self.code}
     class LangGraphParser:
-        def __init__(self, code): self.code = code
+        def __init__(self, code, agent_name=""): self.code = code
         def parse(self): return {"framework": "LangGraph", "source": self.code}
     class AutoGenParser:
-        def __init__(self, code): self.code = code
+        def __init__(self, code, agent_name=""): self.code = code
         def parse(self): return {"framework": "AutoGen", "source": self.code}
+    class PydanticAIParser:
+        def __init__(self, code, agent_name=""): self.code = code
+        def parse(self): return {"framework": "PydanticAI", "source": self.code}
     class LangGraphEmitter:
-        def __init__(self, spec): self.spec = spec
+        def __init__(self, spec, inline_blobs=False): self.spec = spec
         def emit(self): return f"# Target LangGraph Build\n"
     class CrewAIEmitter:
-        def __init__(self, spec): self.spec = spec
+        def __init__(self, spec, inline_blobs=False): self.spec = spec
         def emit(self): return f"# Target CrewAI Build\n"
     class AutoGenEmitter:
-        def __init__(self, spec): self.spec = spec
+        def __init__(self, spec, inline_blobs=False): self.spec = spec
         def emit(self): return f"# Target AutoGen Build\n"
+    class PydanticAIEmitter:
+        def __init__(self, spec, inline_blobs=False): self.spec = spec
+        def emit(self): return f"# Target PydanticAI Build\n"
 
 class SwarmHubMassCompiler:
     """
@@ -137,33 +145,37 @@ class SwarmHubMassCompiler:
                 print(f"   ⚠️  Skipping compilation: Final aggregated string length is 0.\n")
                 continue
 
-            # --- INTERACTIVE AST CODE AUTO-HEALER ---
-            # Corrects broken nested double-quote configurations found in community source notebooks
+            # --- INTERACTIVE AST CODE AUTO-HEALERS ---
             if 'result["compiled_graph"]' in raw_source_string:
                 raw_source_string = raw_source_string.replace('result["compiled_graph"]', "result['compiled_graph']")
+            if 'filter="data"))' in raw_source_string:
+                raw_source_string = raw_source_string.replace('filter="data"))', 'filter="data")')
 
             # --- FRAMEWORK INCLUSION ADAPTER MAPPING ---
-            # Absorb parent systems and standalone scripts into core orchestration pipelines
             target_framework = framework
             if framework in ["LangChain", "LangGraph + FAISS"]:
                 target_framework = "LangGraph"
             elif framework in ["Vanilla Python", "StockAgent", "Generic"]:
-                target_framework = "CrewAI"  # Map standalone code into sequential execution specifications
+                target_framework = "CrewAI"
 
             try:
                 if target_framework == "CrewAI":
-                    universal_spec = CrewAIParser(raw_source_string).parse()
+                    universal_spec = CrewAIParser(raw_source_string, agent_name=slug).parse()
                 elif target_framework == "LangGraph":
-                    universal_spec = LangGraphParser(raw_source_string).parse()
+                    universal_spec = LangGraphParser(raw_source_string, agent_name=slug).parse()
                 elif target_framework == "AutoGen":
-                    universal_spec = AutoGenParser(raw_source_string).parse()
+                    universal_spec = AutoGenParser(raw_source_string, agent_name=slug).parse()
+                elif target_framework == "PydanticAI":
+                    universal_spec = PydanticAIParser(raw_source_string, agent_name=slug).parse()
                 else:
                     print(f"   🍦 Generic framework skip sequence initiated.\n")
                     continue
 
-                lg_code = LangGraphEmitter(universal_spec).emit()
-                cr_code = CrewAIEmitter(universal_spec).emit()
-                ag_code = AutoGenEmitter(universal_spec).emit()
+                # Generate the code vectors for all 4 destination options seamlessly
+                lg_code = LangGraphEmitter(universal_spec, inline_blobs=False).emit()
+                cr_code = CrewAIEmitter(universal_spec, inline_blobs=False).emit()
+                ag_code = AutoGenEmitter(universal_spec, inline_blobs=False).emit()
+                pa_code = PydanticAIEmitter(universal_spec, inline_blobs=False).emit()  # Added PydanticAI Generation
 
                 agent_output_dir = os.path.join(self.output_base_dir, target_framework.lower(), slug)
                 os.makedirs(agent_output_dir, exist_ok=True)
@@ -174,6 +186,8 @@ class SwarmHubMassCompiler:
                     out.write(cr_code)
                 with open(os.path.join(agent_output_dir, "swarmhub_autogen.py"), "w", encoding="utf-8") as out:
                     out.write(ag_code)
+                with open(os.path.join(agent_output_dir, "swarmhub_pydanticai.py"), "w", encoding="utf-8") as out:
+                    out.write(pa_code)  # Added PydanticAI File Output Allocation
 
                 success_count += 1
                 print(f"   🟢 Success! Concrete cross-compiled asset scripts emitted successfully.\n")

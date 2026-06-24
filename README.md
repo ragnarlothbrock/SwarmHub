@@ -2,13 +2,13 @@
 
 ### The Universal Abstraction Plane and Cross-Compiler for AI Agent Frameworks
 
-SwarmHub is an enterprise-grade cross-compiler utility, programmatic SDK, and decentralized package manager designed to completely decouple **AI Workforce Architecture** from **Framework Execution Paradigms**. Design your multi-agent routing graphs, long-running state threads, and tool allocations once using an agnostic, fluent Python API, then instantly cross-compile them natively into production-ready **LangGraph**, **CrewAI**, or **Microsoft AutoGen** codebases.
+SwarmHub is an enterprise-grade cross-compiler utility, programmatic SDK, and decentralized package manager designed to completely decouple **AI Workforce Architecture** from **Framework Execution Paradigms**. Design your multi-agent routing graphs, long-running state threads, and tool allocations once using an agnostic, fluent Python API, then instantly cross-compile them natively into production-ready **LangGraph**, **CrewAI**, **Microsoft AutoGen**, or **PydanticAI** codebases.
 
 ---
 
 ## 💡 The Core Philosophy: Orchestration vs. Cognition
 
-The current AI ecosystem suffers from severe framework lock-in. Switching an active agent workforce from a State-Machine model (LangGraph) to an Actor-Model conversation layer (AutoGen) or a sequential execution track (CrewAI) typically forces an expensive, complete rewrite of state schemas, persistence adapters, and tool parameters.
+The current AI ecosystem suffers from severe framework lock-in. Switching an active agent workforce from a State-Machine model (LangGraph) to an Actor-Model conversation layer (AutoGen), a type-safe frame (PydanticAI), or a sequential execution track (CrewAI) typically forces an expensive, complete rewrite of state schemas, persistence adapters, and tool parameters.
 
 SwarmHub splits the problem cleanly into two layers:
 1. **The Orchestration Layer (SwarmHub Core):** Manages routing topology, thread memory context boundaries, interface constraints, and framework target translation loops at compile time.
@@ -27,23 +27,29 @@ By separating the infrastructure (the framework) from the execution logic (your 
 * **Deterministic AST Cross-Compilation:** Deep Abstract Syntax Tree parsers reverse-engineer native source code parameters and rebuild them symmetrically into alternative framework compilation targets.
 * **Universal Translation Mapping Plane:** Natively ingests legacy architectures and standalone assets, transforming `LangChain` pipelines into stateful `LangGraph` graphs, and unstructured `Vanilla Python` scripts into sequential `CrewAI` topologies.
 * **Interactive AST Code Auto-Healer:** Pre-processing compilation layers scan and repair common syntax defects (such as unescaped nested f-string quotes or trailing bracket typos) programmatically on the fly before code strings hit the parser core.
-* **Batteries-Included Agent Library:** 117 world-class agent environments automatically discovered and indexed, yielding **86 fully functional, pre-compiled production agent matrixes** shipping directly inside the distribution tree.
+* **Batteries-Included Agent Library:** 117 world-class agent environments automatically discovered and indexed, yielding **87 fully functional, pre-compiled production agent matrixes** shipping directly inside the distribution tree.
 * **Strict State Contracts:** Dynamically compiles inline Pydantic validation guards onto the entry and exit boundaries of every agent node, neutralizing state drift or runtime context corruption.
 
 ---
 
 ## 📦 The Pristine Agent Library (Pre-Compiled Distribution Matrix)
 
-SwarmHub ships out-of-the-box with a pre-compiled library containing **86 high-performance production agent systems**. These architectures were extracted directly from the official repositories of leading framework ecosystems and decentralized community registries, stripped of vendor lock-in, and cross-compiled across all target pipelines.
+SwarmHub ships out-of-the-box with a pre-compiled library containing **87 high-performance production agent systems**. These architectures were extracted directly from the official repository engines of the top framework groups and decentralized community registries, stripped of vendor lock-in, and cross-compiled across all four targeting pipelines.
 
-When a developer runs `git clone` on SwarmHub, they instantly inherit an optimized, ready-to-run cross-framework matrix located inside **`dist/compiled/`**:
+When a developer runs `git clone` on SwarmHub, they instantly inherit an optimized cross-framework matrix located inside **`dist/compiled/`**, organized source-first with all native codebooks nested inside each repository folder asset:
 
 ```text
 dist/compiled/
-├── crewai/       # 44 Pre-Compiled Production Crews & Modernized Vanilla Python Codebases
-├── langgraph/    # 13 Pre-Compiled Core Enterprise Graphs & Upgraded LangChain Pipelines
-└── autogen/      # 29 Pre-Compiled Next-Gen AutoGen v0.4+ Workload Blueprints
+├── crewai/       # Pre-Compiled Swarms originating from CrewAI and Vanilla Python sources
+├── langgraph/    # Pre-Compiled Core Graphs originating from LangGraph and LangChain sources
+└── autogen/      # Pre-Compiled Next-Gen AutoGen Workload Blueprints
 ```
+
+Every single individual agent directory inside these folders contains a complete, isolated 4-way cross-framework runtime matrix ready for instant deployment:
+* `swarmhub_langgraph.py` (Native Stateful Graph App)
+* `swarmhub_crewai.py` (Native Task-Driven Sequential Crew App)
+* `swarmhub_autogen.py` (Native Conversational Participant Chatroom Manager)
+* `swarmhub_pydanticai.py` (Native Type-Safe PydanticAI Operational Agent Script)
 
 ### 🧠 Automated Jupyter Notebook Sanitization
 The core framework examples provided by industry maintainers live almost exclusively inside heavily polluted Jupyter Notebooks (`.ipynb`). To prevent Abstract Syntax Tree (AST) compilation crashes, SwarmHub's mass ingestion pre-processors surgically extract code lines and strip out terminal environment pollutions on the fly:
@@ -64,18 +70,23 @@ SwarmHub/
 │   │   ├── builder.py       # Developer-facing Fluent Memory/MCP SDK Generator
 │   │   ├── linker.py        # Graph mutation, interface collision, and link-editing
 │   │   └── registry.py      # Package registry manager, validation linters, and download clients
-│   ├── parsers/             # AST-driven memory, tool, and sequence reverse-engineers
+│   ├── parsers/             # AST-driven memory, tool, and framework reverse-engineers
+│   │   ├── langgraph.py
+│   │   ├── crewai.py
+│   │   ├── autogen.py
+│   │   └── pydanticai.py    # Brand-New Native PydanticAI Parser Layer
 │   └── emitters/            # Framework-specific native code compilers & checkpointers
+│       ├── langgraph.py
+│       ├── crewai.py
+│       ├── autogen.py
+│       └── pydanticai.py    # Brand-New Type-Safe PydanticAI Emitter Backend
 ├── blobs/                   # Cognitive Layer: Framework-agnostic isolated code modules
 ├── tools/                   # Capability Layer: External tools and background MCP service daemons
 ├── examples/                # Composition Layer: Declarative blueprint maps and local source documents
 ├── dist/                    # Production Layer: Cross-compiled executable outputs
 │   ├── registry/
 │   │   └── registry_index.json  # Central Ground-Truth Agent Index (117 Total Solutions)
-│   └── compiled/                # Pre-Compiled Framework Distribution Library Matrix (86 Verified Assets)
-│       ├── crewai/              # Translated and ready-to-run CrewAI asset instances
-│       ├── langgraph/           # Translated and ready-to-run LangGraph asset instances
-│       └── autogen/             # Translated and ready-to-run AutoGen asset instances
+│   └── compiled/                # Pre-Compiled Framework Distribution Matrix (87 Verified Assets)
 └── tests/                   # Verification Layer: Automated cross-framework validation test suite
 ```
 
@@ -138,6 +149,7 @@ from swarmhub.core.builder import SwarmWorkflow
 from swarmhub.emitters.langgraph import LangGraphEmitter
 from swarmhub.emitters.crewai import CrewAIEmitter
 from swarmhub.emitters.autogen import AutoGenEmitter
+from swarmhub.emitters.pydanticai import PydanticAIEmitter
 
 def build_and_compile_advanced_rag():
     workflow = SwarmWorkflow(name="advanced-corrective-rag-swarm")
@@ -179,6 +191,7 @@ def build_and_compile_advanced_rag():
     LangGraphEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_langgraph.py"))
     CrewAIEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_crewai.py"))
     AutoGenEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_autogen.py"))
+    PydanticAIEmitter(universal_spec).write_to_disk(os.path.join(target_dir, "compiled_rag_pydanticai.py"))
 
 if __name__ == "__main__":
     build_and_compile_advanced_rag()
@@ -186,7 +199,7 @@ if __name__ == "__main__":
 
 ### 2. Running and Verifying Cross-Compiled Frameworks
 
-Because SwarmHub compiles true framework-agnostic topologies, your code blobs will execute identically with live interactive terminal prompt gates across all three major platforms.
+Because SwarmHub compiles true framework-agnostic topologies, your code blobs will execute identically with live interactive terminal prompt gates across all major platforms.
 
 Execute the builder script to compile your targets:
 ```bash
@@ -206,6 +219,11 @@ python3 dist/advanced_rag/compiled_rag_crewai.py
 Launch the native **AutoGen** Conversational Participant State Machine Runner:
 ```bash
 python3 dist/advanced_rag/compiled_rag_autogen.py
+```
+
+Launch the native **PydanticAI** Type-Safe Framework Execution Runner:
+```bash
+python3 dist/advanced_rag/compiled_rag_pydanticai.py
 ```
 
 ---
@@ -269,7 +287,22 @@ python3 run_sdk_triage.py
 
 ## 💻 Command Line Interface (CLI) Engine
 
-SwarmHub features a fully decentralized CLI console tool managing both agent cross-compilers and structural repository assets.
+SwarmHub features a fully decentralized CLI console tool managing agent cross-compilers, live portfolio exploration, and structural repository assets.
+
+### Interactive Marketplace Exploration & Scaffolding
+
+Browse, search, and instantly initialize any pre-compiled production asset from the marketplace index in less than 3 seconds:
+
+```bash
+# 1. List and browse all 87 verified production architectures inside the terminal
+swarmhub list
+
+# 2. Filter the decentralized catalog specifically by original codebase framework
+swarmhub list --framework CrewAI
+
+# 3. Unpack and scaffold an asset instantly, mapping it natively into a ready-to-run main.py project workspace
+swarmhub unpack 247-ai-chatbot --target pydanticai --output test_workspace
+```
 
 ### Cross-Framework Transpilation
 
@@ -279,8 +312,8 @@ Convert your generated specification script directly into alternative orchestrat
 # Cross-compile a LangGraph system down into a native, persistent CrewAI code architecture
 swarmhub compile --source dist/production_langgraph.py --from-framework langgraph --target crewai --output dist/crew_workforce.py
 
-# Transpile that same structural architecture layout directly into an AutoGen Chatroom
-swarmhub compile --source dist/production_langgraph.py --target autogen --output dist/autogen_chatroom.py
+# Transpile that same structural architecture layout directly into a PydanticAI workspace agent
+swarmhub compile --source dist/production_langgraph.py --from-framework langgraph --target pydanticai --output dist/pydantic_agent.py
 
 # Optimization Flag: Inline external code blobs back into a single unified deployment asset file
 swarmhub compile --source dist/production_langgraph.py --target langgraph --output dist/unified_script.py --inline
@@ -314,7 +347,7 @@ SwarmHub protects transaction contexts and long-running parameters by appending 
 
 ## 🧪 Running the Compiler Test Suite
 
-To verify the cross-framework translation compilers, linker mergers, and memory rehydration passes locally, run the automated test suite engine:
+To verify the cross-framework translation compilers, linker mergers, and memory rehydration passes locally across all four framework targeting dimensions, run the automated test suite engine:
 
 ```bash
 pytest -v tests/test_compiler_ring.py

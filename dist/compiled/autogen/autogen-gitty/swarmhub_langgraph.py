@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: migrated-autogen-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: autogen-gitty
 # TARGET RUNTIME: LangGraph (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 

@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: migrated-autogen-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: autogen-core-semantic-router
 # TARGET RUNTIME: Microsoft AutoGen (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 # {
 #   "version": "agentic.io/v1alpha1",
 #   "kind": "UniversalAgent",
-#   "name": "migrated-autogen-swarm",
+#   "name": "autogen-core-semantic-router",
 #   "runtime": {
 #     "provider": "autogen_sliced_fallback",
 #     "model": "fallback_model",

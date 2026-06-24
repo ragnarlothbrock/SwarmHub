@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: migrated-crew-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SYSTEM: crewai-prep-for-a-meeting
 # TARGET RUNTIME: Microsoft AutoGen (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 
@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 # {
 #   "version": "agentic.io/v1alpha1",
 #   "kind": "UniversalAgent",
-#   "name": "migrated-crew-swarm",
+#   "name": "crewai-prep-for-a-meeting",
 #   "runtime": {
 #     "provider": "unknown_crew_imported",
 #     "model": "unknown_crew_imported",

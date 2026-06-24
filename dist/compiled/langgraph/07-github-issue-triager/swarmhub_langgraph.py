@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: imported-legacy-agent
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: 07-github-issue-triager
 # TARGET RUNTIME: LangGraph (Memory Layer: in_memory | Thread: swarmhub-recovered-thread)
 # ==========================================================================
 

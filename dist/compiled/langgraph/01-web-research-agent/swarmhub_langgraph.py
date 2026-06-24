@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: imported-legacy-agent
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: 01-web-research-agent
 # TARGET RUNTIME: LangGraph (Memory Layer: in_memory | Thread: swarmhub-recovered-thread)
 # ==========================================================================
 

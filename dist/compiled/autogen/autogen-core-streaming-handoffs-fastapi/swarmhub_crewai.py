@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SWARM: migrated-autogen-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT SWARM: autogen-core-streaming-handoffs-fastapi
 # TARGET RUNTIME: CrewAI (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 
@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 # {
 #   "version": "agentic.io/v1alpha1",
 #   "kind": "UniversalAgent",
-#   "name": "migrated-autogen-swarm",
+#   "name": "autogen-core-streaming-handoffs-fastapi",
 #   "runtime": {
 #     "provider": "autogen_sliced_fallback",
 #     "model": "fallback_model",

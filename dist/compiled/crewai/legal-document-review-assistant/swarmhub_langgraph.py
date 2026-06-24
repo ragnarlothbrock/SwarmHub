@@ -1,5 +1,5 @@
 # ==========================================================================
-# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: migrated-crew-swarm
+# GENERATED AUTOMATICALLY BY SWARMHUB FOR AGENT: legal-document-review-assistant
 # TARGET RUNTIME: LangGraph (Memory Layer: in_memory | Thread: swarmhub-default-thread)
 # ==========================================================================
 
